@@ -11,6 +11,15 @@ import React, {
 } from 'react-native';
 
 class clipin extends Component {
+
+    constructor() {
+        super();
+        fetch('https://clipin.firebaseio.com/users/1.json')
+            .then(res => res.json())
+            .then(res => console.log(res))
+            .catch(error => console.error(error));
+    }
+
     render() {
         return (
             <View style={styles.container}>
