@@ -14,25 +14,35 @@ class clipin extends Component {
 
     constructor() {
         super();
-        fetch('https://clipin.firebaseio.com/users/1.json')
-            .then(res => res.json())
-            .then(res => console.log(res))
+        this.request = fetch('https://clipin.firebaseio.com/users.json')
+            .then(res => res.json());
+
+        this.state = {
+            users : []
+        }
+    }
+
+    componentDidMount(){
+        this.request
+            .then(res =>{
+                this.setState({
+                    users: res.filter(item => item !== null)
+                });
+                console.log(this.state.users);
+            })
             .catch(error => console.error(error));
     }
 
     render() {
+        const users = this.state.users.map((item, i) => {
+            console.log(item);
+            return <Text key={i} style={styles.instructions} >
+                {item.infos.nom} {item.infos.prenom}
+            </Text>;
+        });
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Welcome to React Native!
-                </Text>
-                <Text style={styles.instructions}>
-                    To get started, edit index.ios.js
-                </Text>
-                <Text style={styles.instructions}>
-                    Press Cmd+R to reload,{'\n'}
-                    Cmd+D or shake for dev menu
-                </Text>
+                {users}
             </View>
         );
     }
