@@ -7,7 +7,8 @@ import React, {
     Component,
     StyleSheet,
     Text,
-    View
+    View,
+    ListView
 } from 'react-native';
 
 import Button from 'apsl-react-native-button';
@@ -23,14 +24,13 @@ class clipin extends Component {
 
     constructor() {
         super();
-
-        this._handlePress = this._handlePress.bind(this);
-
         this.request = fetch(dbUsers)
             .then(res => res.json());
 
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
         this.state = {
-            users: []
+            users: this.ds.cloneWithRows([])
         }
 
 
@@ -40,7 +40,7 @@ class clipin extends Component {
         this.request
             .then(res => {
                 this.setState({
-                    users: objectToArray(res)
+                    users: this.ds.cloneWithRows(objectToArray(res))
                 });
 
             })
@@ -49,60 +49,18 @@ class clipin extends Component {
 
     render() {
 
-        const users = this.state.users.map((item, i) => {
-            return <Text key={i} style={styles.instructions}>
-                {item.infos.nom} {item.infos.prenom}
-            </Text>;
-        });
-
         return (
             <View style={styles.container}>
-                {users}
-                <Button style={{backgroundColor: 'transparent'}} textStyle={{fontSize: 18}} onPress={this._handlePress}>
-                    Add infos in db
-                </Button>
+                <ListView
+                    dataSource={this.state.users}
+                    renderRow={(user) =>
+                        <View style={styles.row}>
+                            <Text style={styles.item}>{user.infos.nom}</Text>
+                        </View>
+                    }
+                />
             </View>
         );
-    }
-
-    _handlePress() {
-        fetch(dbUsers, {
-            method: 'POST',
-            body: JSON.stringify({
-                UUID: 'ZERTH4REF',
-                totalRencontres: 2,
-                infos: {
-                    nom: 'Montelimard',
-                    prenom: 'Benjamin',
-                    socials: {
-                        facebook: 'https://facebook.com'
-                    }
-                },
-                relations: [
-                    {
-                        UUID: '12343FZE33',
-                        compatibilite: 60,
-                        date: '12-01-16',
-                        nom: 'Vialaneix',
-                        prenom: 'Juliette'
-                    }
-                ]
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                fetchUser(res.name, dbUsersRequest)
-                    .then(res => {
-                        this.setState({
-                            users: [
-                                ...this.state.users,
-                                res
-                            ]
-                        });
-                    })
-                    .catch(err => console.error(err));
-            })
-            .catch(err => console.error(res));
     }
 }
 
@@ -123,6 +81,19 @@ const styles = StyleSheet.create({
         color: '#333333',
         marginBottom: 5,
     },
+    row: {
+        flex: 1,
+        flexDirection: 'row',
+        width: 100,
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderWidth: 1,
+        borderColor: 'black'
+    },
+    item: {
+        flex:1,
+        textAlign: 'center'
+    }
 });
 
 export default clipin;
