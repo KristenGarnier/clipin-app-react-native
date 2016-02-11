@@ -1,12 +1,12 @@
 import home from './home'
-import puck from './puck'
+import puck from './homeBis'
 export default routes = {
     getHomeRoute() {
         return {
             // Return a React component class for the scene. It receives a prop
             // called `navigator` that you can use to push on more routes.
             getSceneClass() {
-                return home;
+                return puck;
             },
 
             // When this scene receives focus, you can run some code. We're just

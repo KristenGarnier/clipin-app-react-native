@@ -7,131 +7,199 @@ import React, {
     Component,
     StyleSheet,
     Text,
-    View
+    View,
+    Image,
+    TextInput,
+    Dimensions
 } from 'react-native';
 
+import Home from './main';
+
 import Button from 'apsl-react-native-button';
-import {objectToArray, fetchUser} from './utils';
 import ExNavigator from '@exponent/react-native-navigator';
 import Routes from './routes';
 
-const dbUsers = 'https://clipin.firebaseio.com/users.json';
-const dbUsersRequest = 'https://clipin.firebaseio.com/users';
-const dbBase = 'https://clipin.firebaseio.com';
 
 class clipin extends Component {
 
     constructor() {
         super();
 
-        this._handlePress = this._handlePress.bind(this);
         this._handleNav = this._handleNav.bind(this);
 
-        this.request = fetch(dbUsers)
-            .then(res => res.json());
-
         this.state = {
-            users: []
+            login: '',
+            password: '',
+            logged: false
         }
 
 
     }
 
-    componentDidMount() {
-        this.request
-            .then(res => {
-                this.setState({
-                    users: objectToArray(res)
-                });
-
-            })
-            .catch(error => console.error(error));
-    }
 
     render() {
+        if (!this.state.logged) {
+            return (
+                <View style={styles.container}>
+                    <Image source={require('../img/bg.jpg')} resizeMode="cover" style={styles.backDrop}>
+                        <View>
+                            <View style={styles.logoContainer}>
+                                <Image source={require('../img/clip-blanc.png')} resizeMode="contain"
+                                       style={styles.logo}/>
+                            </View>
+                            <View style={styles.groupInput}>
+                                <View style={styles.inputContainer}>
+                                    <TextInput
+                                        style={styles.input}
+                                        onChangeText={(login) => this.setState({login})}
+                                        value={this.state.login}
+                                        placeholder="Login"
+                                        autoCorrect={false}
+                                        placeholderTextColor="white"
+                                    />
+                                </View>
+                                <View style={[styles.inputContainer, styles.marginInput]}>
+                                    <TextInput
+                                        style={styles.input}
+                                        onChangeText={(password) => this.setState({password})}
+                                        value={this.state.password}
+                                        placeholder="*****"
+                                        secureTextEntry={true}
+                                        autoCorrect={false}
+                                        placeholderTextColor="white"
+                                    />
+                                </View>
+                            </View>
+                            <View style={styles.groupButtons}>
+                                <Text style={styles.oubli}>
+                                    Mot de passe oublié ?
+                                </Text>
+                                <View>
+                                    <Button style={styles.button} textStyle={{fontSize: 18}} onPress={this._handleNav}>
+                                        -->
+                                    </Button>
+                                </View>
+                            </View>
+                            <View style={styles.otherConnection}>
+                                <Text style={styles.socialsText}>
+                                    Ou se connecter à partir de
+                                </Text>
+                                <View style={styles.socials}>
+                                    <Image style={styles.socialsIcons} source={require('../img/linkedin.png')}
+                                           resizeMode="contain"/>
+                                    <Image style={styles.socialsIcons} source={require('../img/google-plus.png')}
+                                           resizeMode="contain"/>
+                                </View>
+                            </View>
+                        </View>
+                    </Image>
+                </View>
+            );
+        } else {
+            return (
+                <Home />
+            )
+        }
+    }
 
-        const users = this.state.users.map((item, i) => {
-            return <Text key={i} style={styles.instructions}>
-                {item.infos.nom} {item.infos.prenom}
-            </Text>;
+    _handleNav() {
+        //const route = Routes.getPuckRoute();
+        //this.props.navigator.push(route);
+
+        this.setState({
+            logged: true
         });
-
-        return (
-            <View style={styles.container}>
-                {users}
-                <Button style={{backgroundColor: 'transparent'}} textStyle={{fontSize: 18}} onPress={this._handlePress}>
-                    Add infos in db
-                </Button>
-                <Button style={{backgroundColor: 'transparent'}} textStyle={{fontSize: 18}} onPress={this._handleNav}>
-                    Navigator
-                </Button>
-            </View>
-        );
-    }
-
-    _handleNav(){
-        const route = Routes.getPuckRoute();
-        this.props.navigator.push(route);
-    }
-
-    _handlePress() {
-        fetch(dbUsers, {
-            method: 'POST',
-            body: JSON.stringify({
-                UUID: 'ZERTH4REF',
-                totalRencontres: 2,
-                infos: {
-                    nom: 'Montelimard',
-                    prenom: 'Benjamin',
-                    socials: {
-                        facebook: 'https://facebook.com'
-                    }
-                },
-                relations: [
-                    {
-                        UUID: '12343FZE33',
-                        compatibilite: 60,
-                        date: '12-01-16',
-                        nom: 'Vialaneix',
-                        prenom: 'Juliette'
-                    }
-                ]
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                fetchUser(res.name, dbUsersRequest)
-                    .then(res => {
-                        this.setState({
-                            users: [
-                                ...this.state.users,
-                                res
-                            ]
-                        });
-                    })
-                    .catch(err => console.error(err));
-            })
-            .catch(err => console.error(res));
     }
 }
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+const green = '#a6ce39';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
+        flexDirection: 'row',
     },
-    welcome: {
-        fontSize: 20,
+    button: {
+        alignSelf: 'flex-end',
+        backgroundColor: green,
+        borderWidth: 0,
+        borderRadius: 0,
+        width: width / 2.5,
+        marginRight: 20,
+        marginTop: 40
+    },
+    backDrop: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    input: {
+        height: 40,
+        borderBottomColor: 'white',
+        borderBottomWidth: 4,
+        color: 'white',
+        width: width / 1.5,
+        paddingLeft: 15,
+        paddingRight: 15,
+        justifyContent: 'center'
+    },
+    inputContainer: {
+        flex: 1,
+        borderBottomColor: 'white',
+        borderBottomWidth: 3,
+    },
+    marginInput: {
+        marginTop: 30
+    },
+    logo: {
+        width: width / 1.5,
+        height: 80,
+        marginTop: height * 0.1
+    },
+    logoContainer: {
+        alignItems: 'center'
+    },
+    groupInput: {
+        marginTop: 50,
+        alignItems: 'center'
+    },
+    arrow: {
+        height: 20
+    },
+    oubli: {
+        backgroundColor: 'transparent',
+        color: green,
+        marginTop: 60,
+        marginRight: 20,
+    },
+    groupButtons: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end'
+    },
+    otherConnection: {
+        flex: 1,
+        flexDirection: 'column',
+        marginTop: 40
+    },
+    socials: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 10
+    },
+    socialsIcons: {
+        marginLeft: 20,
+        marginRight: 20
+    },
+    socialsText: {
+        backgroundColor: 'transparent',
         textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
+        color: 'white'
+    }
 });
 
 export default clipin;
