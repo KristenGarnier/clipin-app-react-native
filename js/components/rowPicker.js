@@ -59,7 +59,7 @@ export default class RowPicker extends Component {
                         {this.props.selected}
                     </Text>
                     <FMPicker ref={'picker'} options={this.props.options}
-                              onSubmit={(option) => this.props.submit(option)}
+                              onSubmit={(option) => this.props.submit(option, this.props.stateName)}
                     />
                 </View>
             </View >
