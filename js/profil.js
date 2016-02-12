@@ -90,6 +90,77 @@ const criteria = [
     }
 ];
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+const green = '#a6ce39';
+
+const styles = StyleSheet.create({
+    mainContainer: {},
+    imgContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width,
+        alignItems: 'center',
+        height: height * 0.3,
+    },
+    textContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        paddingLeft: width * 0.1
+    },
+    imgUser: {
+        height: width / 4,
+        borderRadius: width / 8,
+        width: width / 4,
+        marginLeft: width * 0.05
+    },
+    textName: {
+        backgroundColor: 'transparent',
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    infosContainer: {
+        marginTop: 20
+    },
+    textInfos: {
+        backgroundColor: 'transparent',
+        color: 'white',
+    },
+    tableContainer: {
+        borderTopColor: green,
+        borderTopWidth: 3,
+        flex:1,
+        flexDirection: 'column'
+    },
+    modificationContainer: {
+        marginTop: 20
+    },
+    greenColor: {
+        color: green
+    },
+    tableSection: {
+        flex: 1,
+        backgroundColor: '#1B1B1B',
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 10
+    },
+    tableSectionText: {
+        color: 'white',
+        fontWeight: '500'
+    },
+    tableSectionContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    centerText: {
+        textAlign: 'center'
+    }
+});
+
 class Profil extends Component {
 
     constructor() {
@@ -165,101 +236,6 @@ class Profil extends Component {
         })
     }
 }
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-const green = '#a6ce39';
-const grey = '#9D9D9D';
-
-const styles = StyleSheet.create({
-    mainContainer: {},
-    imgContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width,
-        alignItems: 'center',
-        height: height * 0.3,
-    },
-    textContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        paddingLeft: width * 0.1
-    },
-    imgUser: {
-        height: width / 4,
-        borderRadius: width / 8,
-        width: width / 4,
-        marginLeft: width * 0.05
-    },
-    textName: {
-        backgroundColor: 'transparent',
-        color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    infosContainer: {
-        marginTop: 20
-    },
-    textInfos: {
-        backgroundColor: 'transparent',
-        color: 'white',
-    },
-    tableContainer: {
-        borderTopColor: green,
-        borderTopWidth: 3,
-        flex:1,
-        flexDirection: 'column'
-    },
-    modificationContainer: {
-        marginTop: 20
-    },
-    greenColor: {
-        color: green
-    },
-    tableSection: {
-        flex: 1,
-        backgroundColor: '#1B1B1B',
-        paddingTop: 15,
-        paddingBottom: 15,
-        paddingLeft: 10
-    },
-    tableSectionText: {
-        color: 'white',
-        fontWeight: '500'
-    },
-    tableInfoContainer: {
-        flex:1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 15,
-        paddingBottom: 15,
-    },
-    tableInfoLeftText: {
-        fontWeight: 'bold'
-    },
-    tableInfoRightText: {
-        fontWeight: '100',
-        color: grey
-    },
-    tableElementDivider: {
-        flex: 1,
-        flexDirection: 'row',
-        borderBottomColor: grey,
-        borderBottomWidth: 1,
-        opacity: 0.3
-    },
-    tableSectionContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
-    centerText: {
-        textAlign: 'center'
-    }
-});
 
 export default Profil;
 
