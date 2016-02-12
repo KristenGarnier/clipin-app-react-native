@@ -10,7 +10,8 @@ import React, {
     View,
     Image,
     TextInput,
-    Dimensions
+    Dimensions,
+    ScrollView
 } from 'react-native';
 
 import Home from './main';
@@ -40,7 +41,7 @@ class clipin extends Component {
     render() {
         if (!this.state.logged) {
             return (
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                     <Image source={require('../img/bg.jpg')} resizeMode="cover" style={styles.backDrop}>
                         <View>
                             <View style={styles.logoContainer}>
@@ -93,7 +94,7 @@ class clipin extends Component {
                             </View>
                         </View>
                     </Image>
-                </View>
+                </ScrollView>
             );
         } else {
             return (
