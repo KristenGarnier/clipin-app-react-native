@@ -171,7 +171,7 @@ class Profil extends Component {
 
     _handleModify(){
         this.props.navigator.push({
-            title: 'modifer',
+            title: 'Modifer',
             component: ProfilModify
         })
     }

@@ -1,4 +1,4 @@
-import Home from './home'
+import Home from './login'
 import Profil from './profil'
 export default routes = {
     getProfileRoute() {

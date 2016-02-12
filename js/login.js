@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     }
 });
 
-class clipin extends Component {
+class Login extends Component {
 
     constructor() {
         super();
@@ -206,6 +206,6 @@ class clipin extends Component {
 
 
 
-export default clipin;
+export default Login;
 
 

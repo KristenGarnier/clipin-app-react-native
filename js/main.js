@@ -10,7 +10,8 @@ import React,
     Text,
     TabBarIOS,
     StyleSheet,
-    NavigatorIOS
+    NavigatorIOS,
+    StatusBarIOS,
 } from 'react-native';
 
 import Profil from './profil';
@@ -18,6 +19,8 @@ import {green, black} from './colors';
 
 const styles = StyleSheet.create({
 });
+
+StatusBarIOS.setStyle('light-content');
 
 
 class Main extends Component {
@@ -46,6 +49,9 @@ class Main extends Component {
                             title: 'Profil',
                             component: Profil
                         }}
+                        barTintColor="black"
+                        tintColor="white"
+                        titleTextColor="white"
                     />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
@@ -54,7 +60,7 @@ class Main extends Component {
                     icon={require('../img/stats-min.png')}
                     onPress={() => this.setState({selectedTab: 'Stats'})}
                 >
-
+                    <Text>FED UP OF THIS ERROR</Text>
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     icon={require('../img/logo.png')}

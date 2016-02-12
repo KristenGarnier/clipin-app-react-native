@@ -17,6 +17,8 @@ import React, {
 import {green, grey} from './colors';
 import RowPicker from './components/rowPicker';
 import FMPicker from 'react-native-fm-picker';
+import Row from './components/tableRow';
+import Switch from './components/switch';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -24,6 +26,7 @@ const height = Dimensions.get('window').height;
 var etreOptions = ['Ouvert(e) aux opportunitées', 'Déjà employé'];
 var rechercheOptions = ['Un emploi', 'Un employé'];
 var metiersOptions = ['Coiffeur', 'Sys admin', 'Développeur'];
+var diplomeOptions = ['DUT', 'CAP', 'BTS', 'LICENCE 1', "LICENCE 2", "LICENCE 3", "LICENCE PRO", "MASTER PRO", 'DEUG', 'BAC', 'MASTER 1', 'MASTER 2','DOCTORAT', 'BACHELOR'];
 
 const styles = StyleSheet.create({
     container: {
@@ -60,6 +63,19 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10
     },
+    avancedText: {
+        paddingBottom: 20,
+        paddingTop: 20,
+        color: green
+    },
+    advancedContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    bigInput: {
+        height: 150,
+    }
 });
 
 class Profil extends Component {
@@ -68,6 +84,8 @@ class Profil extends Component {
         super();
 
         this._handlePicker = this._handlePicker.bind(this);
+        this._renderAdvanced = this._renderAdvanced.bind(this);
+        this._handlePress = this._handlePress.bind(this);
 
         this.state = {
             name: '',
@@ -83,14 +101,90 @@ class Profil extends Component {
             etre: etreOptions[0],
             recherche: rechercheOptions[0],
             metier: metiersOptions[0],
+            advanced: false,
+            diplome: diplomeOptions[0],
+            preferences: '',
+            exp: '',
+            hobbies: '',
+            skills: '',
+            salaire: '',
         }
 
     }
 
+    _renderAdvanced() {
+        if(this.state.advanced){
+            return <View>
+                <RowPicker
+                    name="Dernier diplôme"
+                    options={diplomeOptions}
+                    selected={this.state.diplome}
+                    submit={this._handlePicker}
+                    stateName="diplome"
+                />
+
+                <Row name={'Permis'} content={<Switch/>} />
+                <View style={styles.inputWrapper}>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={(salaire) => this.setState({salaire})}
+                        value={this.state.salaire}
+                        keyboardType="number-pad"
+                        placeholder="Salaire minimum"
+                        autoCorrect={false}
+                        placeholderTextColor={grey}
+                    />
+                </View>
+                <View style={styles.inputWrapper}>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={(hobbies) => this.setState({hobbies})}
+                        value={this.state.hobbies}
+                        placeholder="Hobbies ( séparés par une virgule )"
+                        placeholderTextColor={grey}
+                    />
+                </View>
+                <View style={styles.inputWrapper}>
+                    <TextInput
+                        style={[styles.input, styles.bigInput]}
+                        onChangeText={(exp) => this.setState({exp})}
+                        value={this.state.exp}
+                        placeholder="Expériences professionnelles"
+                        placeholderTextColor={grey}
+                        multiline={true}
+                    />
+                </View>
+                <View style={styles.inputWrapper}>
+                    <TextInput
+                        style={[styles.input, styles.bigInput]}
+                        onChangeText={(skills) => this.setState({skills})}
+                        value={this.state.skills}
+                        placeholder="skills"
+                        placeholderTextColor={grey}
+                        multiline={true}
+                    />
+                </View>
+
+                <View style={styles.inputWrapper}>
+                    <TextInput
+                        style={[styles.input, styles.bigInput]}
+                        onChangeText={(preferences) => this.setState({preferences})}
+                        value={this.state.preferences}
+                        placeholder="Préférences"
+                        placeholderTextColor={grey}
+                        multiline={true}
+                    />
+                </View>
+
+            </View>
+        }
+
+        return;
+    }
 
     render() {
         return (
-            <ScrollView>
+            <ScrollView >
                 <View style={styles.container}>
                     <Image source={require('../img/avatar-f.jpg')} resizeMode="contain" style={styles.imgUser}/>
                     <View style={styles.textContainer}>
@@ -102,6 +196,7 @@ class Profil extends Component {
                                 placeholder="Votre nom"
                                 autoCorrect={false}
                                 placeholderTextColor={grey}
+                                clearButtonMode="while-editing"
                             />
                         </View>
                         <View style={styles.inputWrapper}>
@@ -113,6 +208,7 @@ class Profil extends Component {
                                 placeholder="Votre âge"
                                 autoCorrect={false}
                                 placeholderTextColor={grey}
+                                clearButtonMode="while-editing"
                             />
                         </View>
 
@@ -151,6 +247,7 @@ class Profil extends Component {
                             placeholder="Mail"
                             autoCorrect={false}
                             placeholderTextColor={grey}
+                            clearButtonMode="while-editing"
                         />
                     </View>
                     <View style={styles.inputWrapper}>
@@ -162,6 +259,7 @@ class Profil extends Component {
                             placeholder="Numéro de téléphone"
                             autoCorrect={false}
                             placeholderTextColor={grey}
+                            clearButtonMode="while-editing"
                         />
                     </View>
                     <View style={styles.inputWrapper}>
@@ -173,6 +271,7 @@ class Profil extends Component {
                             placeholder="Numéro domicile"
                             autoCorrect={false}
                             placeholderTextColor={grey}
+                            clearButtonMode="while-editing"
                         />
                     </View>
                     <View style={styles.inputWrapper}>
@@ -184,6 +283,7 @@ class Profil extends Component {
                             placeholder="Numéro professionnel"
                             autoCorrect={false}
                             placeholderTextColor={grey}
+                            clearButtonMode="while-editing"
                         />
                     </View>
                     <View style={styles.inputWrapper}>
@@ -194,6 +294,7 @@ class Profil extends Component {
                             placeholder="Adresse"
                             autoCorrect={false}
                             placeholderTextColor={grey}
+                            clearButtonMode="while-editing"
                         />
                     </View>
                     <View style={styles.inputWrapper}>
@@ -205,6 +306,7 @@ class Profil extends Component {
                             placeholder="Code postal"
                             autoCorrect={false}
                             placeholderTextColor={grey}
+                            clearButtonMode="while-editing"
                         />
                     </View>
                     <View style={styles.inputWrapper}>
@@ -215,6 +317,7 @@ class Profil extends Component {
                             placeholder="Ville"
                             autoCorrect={false}
                             placeholderTextColor={grey}
+                            clearButtonMode="while-editing"
                         />
                     </View>
                     <View style={styles.inputWrapper}>
@@ -225,17 +328,37 @@ class Profil extends Component {
                             placeholder="Nom de l'entreprise"
                             autoCorrect={false}
                             placeholderTextColor={grey}
+                            clearButtonMode="while-editing"
                         />
                     </View>
                 </View>
+                <View style={styles.advancedContainer}>
+                    <Text
+                        style={styles.avancedText}
+                        onPress={this._handlePress}
+                    >
+                        {this.state.advanced ?
+                            'Masquer les paramètres avancés'
+                            :
+                            'Afficher les paramètres avancés'
+                        }
+                    </Text>
+                </View>
+                {this._renderAdvanced()}
             </ScrollView >
         );
     }
 
-    _handlePicker(option, stateName){
+    _handlePicker(option, stateName) {
         let obj = {};
         obj[stateName] = option;
         this.setState(obj);
+    }
+
+    _handlePress(){
+        this.setState({
+            advanced: !this.state.advanced
+        })
     }
 
 }
