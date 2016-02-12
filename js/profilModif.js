@@ -11,13 +11,17 @@ import React, {
     Image,
     TextInput,
     Dimensions,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 
 import {green, grey} from './colors';
+import RowPicker from './components/rowPicker';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
+var etreOptions = ['Ouvert(e) aux opportunitées', 'Déjà employé'];
+var rechercheOptions = ['Un emploi', 'Un employé'];
 
 const styles = StyleSheet.create({
     container: {
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
         color: green
     },
     inputWrapper: {
-        borderBottomWidth:1,
+        borderBottomWidth: 1,
         borderBottomColor: grey,
         paddingTop: 10,
         paddingBottom: 10
@@ -61,6 +65,9 @@ class Profil extends Component {
     constructor() {
         super();
 
+        this._handleEtre = this._handleEtre.bind(this);
+        this._handleRecherche = this._handleRecherche.bind(this);
+
         this.state = {
             name: '',
             age: '',
@@ -71,7 +78,9 @@ class Profil extends Component {
             adresse: '',
             cp: '',
             ville: '',
-            enterprise: ''
+            enterprise: '',
+            etre: etreOptions[0],
+            recherche: rechercheOptions[0]
         }
 
     }
@@ -97,7 +106,7 @@ class Profil extends Component {
                             <TextInput
                                 style={styles.input}
                                 onChangeText={(age) => this.setState({age})}
-                                    value={this.state.age}
+                                value={this.state.age}
                                 keyboardType="number-pad"
                                 placeholder="Votre âge"
                                 autoCorrect={false}
@@ -106,6 +115,20 @@ class Profil extends Component {
                         </View>
 
                     </View>
+                </View>
+                <View>
+                    <RowPicker
+                        name="Je suis"
+                        options={etreOptions}
+                        selected={this.state.etre}
+                        submit={this._handleEtre}
+                    />
+                    <RowPicker
+                        name="Je recherche"
+                        options={rechercheOptions}
+                        selected={this.state.recherche}
+                        submit={this._handleRecherche}
+                    />
                 </View>
                 <View>
                     <View style={styles.inputWrapper}>
@@ -196,6 +219,18 @@ class Profil extends Component {
                 </View>
             </ScrollView >
         );
+    }
+
+    _handleEtre(option){
+        this.setState({
+            etre: option
+        })
+    }
+
+    _handleRecherche(option){
+        this.setState({
+            recherche: option
+        })
     }
 
 }
