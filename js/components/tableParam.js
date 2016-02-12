@@ -8,7 +8,6 @@ import React, {
     StyleSheet,
     Text,
     View,
-    Dimensions
 } from 'react-native';
 
 import Divider from './tableDivider';

@@ -22,9 +22,10 @@ import Row from './components/tableRow';
 import Table from './components/tableParam';
 import {criteria, advanced, general} from './tableData';
 
+import {green} from './colors';
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const green = '#a6ce39';
 
 const styles = StyleSheet.create({
     mainContainer: {},

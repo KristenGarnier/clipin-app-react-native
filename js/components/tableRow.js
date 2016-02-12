@@ -9,7 +9,7 @@ import React, {
     View,
 } from 'react-native';
 
-const grey = '#9D9D9D';
+import {grey} from '../colors';
 
 const styles = StyleSheet.create({
     tableInfoContainer: {
