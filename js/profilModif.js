@@ -16,12 +16,14 @@ import React, {
 
 import {green, grey} from './colors';
 import RowPicker from './components/rowPicker';
+import FMPicker from 'react-native-fm-picker';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 var etreOptions = ['Ouvert(e) aux opportunitées', 'Déjà employé'];
 var rechercheOptions = ['Un emploi', 'Un employé'];
+var metiersOptions = ['Coiffeur', 'Sys admin', 'Développeur'];
 
 const styles = StyleSheet.create({
     container: {
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
         borderBottomColor: grey,
         paddingTop: 10,
         paddingBottom: 10
-    }
+    },
 });
 
 class Profil extends Component {
@@ -65,8 +67,7 @@ class Profil extends Component {
     constructor() {
         super();
 
-        this._handleEtre = this._handleEtre.bind(this);
-        this._handleRecherche = this._handleRecherche.bind(this);
+        this._handlePicker = this._handlePicker.bind(this);
 
         this.state = {
             name: '',
@@ -80,7 +81,8 @@ class Profil extends Component {
             ville: '',
             enterprise: '',
             etre: etreOptions[0],
-            recherche: rechercheOptions[0]
+            recherche: rechercheOptions[0],
+            metier: metiersOptions[0],
         }
 
     }
@@ -121,13 +123,22 @@ class Profil extends Component {
                         name="Je suis"
                         options={etreOptions}
                         selected={this.state.etre}
-                        submit={this._handleEtre}
+                        submit={this._handlePicker}
+                        stateName="etre"
                     />
                     <RowPicker
                         name="Je recherche"
                         options={rechercheOptions}
                         selected={this.state.recherche}
-                        submit={this._handleRecherche}
+                        submit={this._handlePicker}
+                        stateName="recherche"
+                    />
+                    <RowPicker
+                        name="Mon métier est"
+                        options={metiersOptions}
+                        selected={this.state.metier}
+                        submit={this._handlePicker}
+                        stateName="metier"
                     />
                 </View>
                 <View>
@@ -221,16 +232,10 @@ class Profil extends Component {
         );
     }
 
-    _handleEtre(option){
-        this.setState({
-            etre: option
-        })
-    }
-
-    _handleRecherche(option){
-        this.setState({
-            recherche: option
-        })
+    _handlePicker(option, stateName){
+        let obj = {};
+        obj[stateName] = option;
+        this.setState(obj);
     }
 
 }
