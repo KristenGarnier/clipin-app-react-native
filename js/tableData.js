@@ -1,58 +1,61 @@
+import React from 'react-native';
+import Swtich from './components/switch'
+
 export const advanced = [
     {
         name : 'Hobbies',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Formation',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Expérience',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Compétences',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Préférences',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Permis',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Salaire minimum',
-        content : 'future toggle'
+        content : <Swtich />
     }
 ];
 
  export const general = [
     {
         name : 'Numéro de téléphone',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Nom & prénom',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Âge',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Adresse',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Mail',
-        content : 'future toggle'
+        content : <Swtich />
     },
     {
         name : 'Profession',
-        content : 'future toggle'
+        content : <Swtich />
     }
 ];
 

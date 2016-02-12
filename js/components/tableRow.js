@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 15,
         paddingBottom: 15,
+        alignItems: 'center'
     },
     tableInfoLeftText: {
         fontWeight: 'bold'
@@ -36,9 +37,15 @@ export default ({name, content}) => {
             <View>
                 <Text style={styles.tableInfoLeftText}>{name}</Text>
             </View>
-            <View>
-                <Text style={styles.tableInfoRightText}>{content}</Text>
-            </View>
+            { typeof content !== 'string' ?
+                <View>
+                    {content}
+                </View>
+                :
+                <View>
+                    <Text style={styles.tableInfoRightText}>{content}</Text>
+                </View>
+            }
         </View>
     )
 }
