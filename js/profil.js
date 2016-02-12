@@ -15,12 +15,11 @@ import React, {
 } from 'react-native';
 
 
-import ExNavigator from '@exponent/react-native-navigator';
-import Routes from './routes';
 import Divider from './components/tableDivider';
 import Row from './components/tableRow';
 import Table from './components/tableParam';
 import {criteria, advanced, general} from './tableData';
+import ProfilModify from './profilModif';
 
 import {green} from './colors';
 
@@ -100,6 +99,7 @@ class Profil extends Component {
         super();
 
         this._handlePress = this._handlePress.bind(this);
+        this._handleModify = this._handleModify.bind(this);
 
         this.state = {
             avanced: false
@@ -129,7 +129,7 @@ class Profil extends Component {
                         </View>
 
                         <View style={styles.modificationContainer}>
-                            <Text style={[styles.textInfos, styles.greenColor]}>Modifier</Text>
+                            <Text style={[styles.textInfos, styles.greenColor]} onPress={this._handleModify}>Modifier</Text>
                         </View>
 
                     </View>
@@ -166,6 +166,13 @@ class Profil extends Component {
         }
         this.setState({
             avanced: !this.state.avanced
+        })
+    }
+
+    _handleModify(){
+        this.props.navigator.push({
+            title: 'modifer',
+            component: ProfilModify
         })
     }
 }
