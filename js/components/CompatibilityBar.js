@@ -1,5 +1,7 @@
-import React, {View, Text, StyleSheet} from 'react-native';
+import React, {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {black, green} from '../colors';
+
+const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   compatibiliteRow: {
@@ -29,11 +31,12 @@ const styles = StyleSheet.create({
     backgroundColor: black
   },
   trueBarreCompatibilite: {
-    backgroundColor: green
+    backgroundColor: green,
+    height: 14
   }
 });
 
-export default ({percentage, width}) => {
+export default ({percentage}) => {
   const is100 = Number(percentage) === 100 ? 0.33 : 0.3;
   const lenghtBar = percentage / 100 - ( is100 * (percentage / 100));
   return <View style={styles.compatibiliteRow}>
@@ -48,7 +51,6 @@ export default ({percentage, width}) => {
       </Text>
       <View style={styles.barreCompatibilite}>
         <View style={[styles.trueBarreCompatibilite, {width: width * lenghtBar}]}>
-          <Text></Text>
         </View>
       </View>
     </View>

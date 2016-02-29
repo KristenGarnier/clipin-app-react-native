@@ -1,3 +1,5 @@
+import {orange, red, green} from './colors';
+
 // ObjectToArray : Object -> Array
 // Convert and object to an array, if the key is a string, it saves it in an 'id' property
 export function objectToArray(obj) {
@@ -19,6 +21,20 @@ export function fetchUser(user, url) {
         .then(res => res.json());
 }
 
-export function toUpper(text) => {
-    return text.toUpperCase()
+// selectColor : String -> String
+// send back a color for a given length
+export function selectColor(ChainLenght){
+    switch(ChainLenght){
+        case 1:
+            return red;
+            break;
+        case 2:
+            return orange;
+            break;
+        case 3:
+            return green;
+            break;
+        default:
+            return 'transparent';
+    }
 }
