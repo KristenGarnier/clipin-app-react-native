@@ -15,6 +15,7 @@ import React,
 } from 'react-native';
 
 import Profil from './profil';
+import Params from './params';
 import {green, black} from './colors';
 
 const styles = StyleSheet.create({
@@ -80,7 +81,18 @@ class Main extends Component {
                     icon={require('../img/settings-min.png')}
                     onPress={() => this.setState({selectedTab: 'Paramètres'})}
                 >
-                    <Text>HELLOO Stats</Text>
+                  <NavigatorIOS
+                    style={{
+                            flex: 1
+                        }}
+                    initialRoute={{
+                            title: 'Réglages',
+                            component: Params
+                        }}
+                    barTintColor="black"
+                    tintColor="white"
+                    titleTextColor="white"
+                  />
                 </TabBarIOS.Item>
             </TabBarIOS>
         );

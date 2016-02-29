@@ -18,3 +18,7 @@ export function fetchUser(user, url) {
     return fetch(`${url}/${user}.json`)
         .then(res => res.json());
 }
+
+export function toUpper(text) => {
+    return text.toUpperCase()
+}
