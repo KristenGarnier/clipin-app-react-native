@@ -20,7 +20,7 @@ export default routes = {
             // This route's title is displayed next to the back button when you push
             // a new route on top of this one.
             getTitle() {
-                return 'Profil';
+                return 'Contact';
             }
         };
     }

@@ -107,26 +107,12 @@ const styles = StyleSheet.create({
 
 class Profil extends Component {
 
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
 
-    this.state = {
-      compatibilite: 33,
-      user: {
-        nom: 'Duroux',
-        prenom: 'Clement',
-        age: 37,
-        metier: 'coiffeur',
-        entreprise: 'Open Classroom',
-        mail: 'clement-duroux@gmail.com',
-        tel: '06.01.02.03.04',
-        adresse: {
-          adresse: '255, avenue du stage',
-          cp: 42000,
-          ville: 'ST ETIENNE'
-        }
-      }
-    };
+    console.log(props);
+
+    this.state = props.data;
 
   }
 

@@ -16,6 +16,7 @@ import React,
 
 import Profil from './profil';
 import Params from './params';
+import Contacts from './contact';
 import {green, black} from './colors';
 
 const styles = StyleSheet.create({
@@ -72,7 +73,18 @@ class Main extends Component {
                     icon={require('../img/contact-min.png')}
                     onPress={() => this.setState({selectedTab: 'Contacts'})}
                 >
-                    <Text>HELLOO Stats</Text>
+                  <NavigatorIOS
+                    style={{
+                            flex: 1
+                        }}
+                    initialRoute={{
+                            title: 'Contacts',
+                            component: Contacts
+                        }}
+                    barTintColor="black"
+                    tintColor="white"
+                    titleTextColor="white"
+                  />
                 </TabBarIOS.Item>
 
                 <TabBarIOS.Item

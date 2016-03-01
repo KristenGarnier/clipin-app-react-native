@@ -14,12 +14,8 @@ import React, {
   ScrollView
 } from 'react-native';
 
-
-import Divider from './components/tableDivider';
-import Row from './components/tableRow';
-import Table from './components/tableParam';
-import {confidential, sociaux} from './tableData';
-import ProfilModify from './profilModif';
+import RowUser from './components/rowUser';
+import UserProfil from './userProfile';
 import {green} from './colors';
 
 const width = Dimensions.get('window').width;
@@ -40,12 +36,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingLeft: width * 0.1
   },
-  imgUser: {
-    height: width / 4,
-    borderRadius: width / 8,
-    width: width / 4,
-    marginLeft: width * 0.05
-  },
   textName: {
     backgroundColor: 'transparent',
     color: 'white',
@@ -62,7 +52,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     borderTopColor: green,
     borderTopWidth: 3,
-    flex:1,
+    flex: 1,
     flexDirection: 'column'
   },
   modificationContainer: {
@@ -99,60 +89,102 @@ const styles = StyleSheet.create({
   titleSection: {
 
     backgroundColor: 'rgba(0,0,0, 0.5)',
-    paddingTop:15,
-    paddingBottom:15,
-    paddingLeft:40,
-    paddingRight:40,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 40,
+    paddingRight: 40,
   },
   textTitleSection: {
     color: 'white',
     fontSize: 18,
     textAlign: 'right'
+  },
+  userRow: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: height * 0.01,
+    paddingHorizontal: width * 0.04
+  },
+  rowName: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    marginLeft: 20
   }
 });
 
-class Parameters extends Component {
+class Contact extends Component {
 
-  constructor() {
+  constructor () {
     super();
 
     this._handlePress = this._handlePress.bind(this);
-    this._handleModify = this._handleModify.bind(this);
 
     this.state = {
-      avanced: false
+      user: [
+        {
+          compatibilite: 33,
+          user: {
+            nom: 'Duroux',
+            prenom: 'Clement',
+            age: 37,
+            metier: 'coiffeur',
+            entreprise: 'Open Classroom',
+            mail: 'clement-duroux@gmail.com',
+            tel: '06.01.02.03.04',
+            adresse: {
+              adresse: '255, avenue du stage',
+              cp: 42000,
+              ville: 'ST ETIENNE'
+            }
+          }
+        }, {
+          compatibilite: 69,
+          user: {
+            nom: 'Albahani',
+            prenom: 'Malÿka',
+            age: 23,
+            metier: 'Eboueuse',
+            entreprise: 'Municipalité',
+            mail: 'malyka-albahani@gmail.com',
+            tel: '06.01.02.03.04',
+            adresse: {
+              adresse: '255, avenue de la galère',
+              cp: 42000,
+              ville: 'ST ETIENNE'
+            }
+          }
+        }
+      ]
     }
 
-
   }
 
-  _renderTable() {
-    if(this.state.avanced) return <Table  renders={advanced}/>;
-
-    return <Table  renders={general}/>
-  }
-
-
-  render() {
+  render () {
+    const users = this.state.user.map((user, i) => {
+        return <RowUser key={user.user.nom} img={require('../img/avatar-f.jpg')} press={this._handlePress}
+                        infos={user}/>
+    });
     return (
-      <ScrollView  style={styles.mainContainer}>
-        <Image source={require('../img/banner-settings.jpg')} resizeMode="cover" style={styles.imgContainer}>
+      <ScrollView style={styles.mainContainer}>
+        <Image source={require('../img/banner-contact.jpg')} resizeMode="cover" style={styles.imgContainer}>
           <View style={styles.titleContainer}>
             <View style={styles.titleSection}>
-              <Text style={styles.textTitleSection}>RÉGLAGES</Text>
+              <Text style={styles.textTitleSection}>CONTACTS</Text>
             </View>
           </View>
         </Image>
         <View style={styles.tableContainer}>
           <View>
             <View style={styles.tableSection}>
-              <Text style={styles.tableSectionText}>Confidentialité</Text>
+              <Text style={styles.tableSectionText}>Mes clips</Text>
             </View>
-            <Table renders={confidential}/>
+            {users}
             <View style={styles.tableSection}>
-              <Text style={styles.tableSectionText}>Réseaux sociaux</Text>
+              <Text style={styles.tableSectionText}>Mes clips manuels</Text>
             </View>
-            <Table renders={sociaux}/>
+            {users}
           </View>
 
         </View>
@@ -160,25 +192,17 @@ class Parameters extends Component {
     );
   }
 
-  _handlePress(param){
-    if(param === 'general' && !this.state.avanced){
-      return;
-    } else if(param !== 'general' && this.state.avanced){
-      return;
-    }
-    this.setState({
-      avanced: !this.state.avanced
-    })
-  }
-
-  _handleModify(){
+  _handlePress (data) {
     this.props.navigator.push({
-      title: 'Modifer',
-      component: ProfilModify
+      title: `${data.user.nom} ${data.user.prenom}`,
+      component: UserProfil,
+      passProps: {
+        data: data
+      }
     })
   }
 }
 
-export default Parameters;
+export default Contact;
 
 
