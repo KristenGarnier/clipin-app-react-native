@@ -30,9 +30,11 @@ export default ({img, press, infos}) => {
     <View style={styles.userRow}>
       <Image source={img} resizeMode="contain" style={styles.imgUser}/>
       <View style={styles.rowName}>
+        <TouchableHighlight underlayColor="transparent" onPress={() => press(infos)} >
         <Text>{infos.user.nom} {infos.user.prenom}</Text>
+        </TouchableHighlight>
       </View>
-      <TouchableHighlight onPress={() => press(infos)} >
+      <TouchableHighlight underlayColor="transparent" onPress={() => press(infos)} >
         <Image source={require('../../img/voir-plus.png')} />
       </TouchableHighlight>
     </View>
