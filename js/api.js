@@ -3,17 +3,35 @@ const dbUsers = 'http://127.0.0.1:8000/api/users';
 export const getUsers = fetch(dbUsers)
     .then(res => res.json());
 
-export const addUser = fetch(dbUsers, {
+export function getRelations(id) {
+  return fetch(`${dbUsers}/${id}/relations`)
+};
+
+export function addUser(data) {
+  return fetch(dbUsers, {
     method: 'POST',
     headers: new Headers({
-        'Content-Type': 'application/json'
+      'Content-Type': 'application/json'
     }),
-    body: JSON.stringify({
-        password: "sadazazeezee69",
-        username: "lolaazeegzfazfeazeie",
-        email: "test@azeRfgegraelol.fo",
-        prenom: "kaazaeka",
-        nom: "salade",
-        uuid: "JDZ323443RHE8"
+    body: JSON.stringify(data)
+  })
+};
+
+export function addRelation(id, idRelation) {
+  return fetch(`${dbUsers}/${id}/relations`, {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify({user: idRelation})
+  })
+};
+
+export function removeRelation(id, idRelation) {
+  return fetch(`${dbUsers}/${id}/relations/${idRelation}`, {
+    method: 'DELETE',
+    headers: new Headers({
+      'Content-Type': 'application/json'
     })
-});
+  })
+};

@@ -17,7 +17,7 @@ import React, {
 import RowUser from './components/rowUser';
 import UserProfil from './userProfile';
 import {green} from './colors';
-import {getUsers} from './api';
+import {getUsers, getRelations} from './api';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -129,18 +129,17 @@ class Contact extends Component {
     this.request = getUsers;
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.request
       .then(res => {
         this.setState({
-          user: res.map(user => Object.assign(user, {compatibilite: 55}))
+          user: res.map(user => Object.assign(user, { compatibilite: 55 }))
         });
       })
       .catch(error => console.error(error));
   }
 
   render () {
-    console.log(this.state.user);
     const users = this.state.user.map((user, i) => {
       return <RowUser key={user.uuid} img={require('../img/avatar-f.jpg')} press={this._handlePress}
                       infos={user}/>
