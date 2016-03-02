@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center'
   },
-
 });
 
 export default ({date, nb, max}) => {

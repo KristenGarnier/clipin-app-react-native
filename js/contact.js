@@ -133,27 +133,9 @@ class Contact extends Component {
             entreprise: 'Open Classroom',
             mail: 'clement-duroux@gmail.com',
             tel: '06.01.02.03.04',
-            adresse: {
-              adresse: '255, avenue du stage',
-              cp: 42000,
-              ville: 'ST ETIENNE'
-            }
-          }
-        }, {
-          compatibilite: 69,
-          user: {
-            nom: 'Albahani',
-            prenom: 'Malÿka',
-            age: 23,
-            metier: 'Eboueuse',
-            entreprise: 'Municipalité',
-            mail: 'malyka-albahani@gmail.com',
-            tel: '06.01.02.03.04',
-            adresse: {
-              adresse: '255, avenue de la galère',
-              cp: 42000,
-              ville: 'ST ETIENNE'
-            }
+            adresse: '255, avenue du stage',
+            cp: 42000,
+            ville: 'ST ETIENNE'
           }
         }
       ]
@@ -163,8 +145,8 @@ class Contact extends Component {
 
   render () {
     const users = this.state.user.map((user, i) => {
-        return <RowUser key={user.user.nom} img={require('../img/avatar-f.jpg')} press={this._handlePress}
-                        infos={user}/>
+      return <RowUser key={user.user.nom} img={require('../img/avatar-f.jpg')} press={this._handlePress}
+                      infos={user}/>
     });
     return (
       <ScrollView style={styles.mainContainer}>

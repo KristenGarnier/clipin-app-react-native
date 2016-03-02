@@ -157,7 +157,7 @@ class Profil extends Component {
             </View>
             <RowIcon img={require('../img/tel.png')} text={this.state.user.tel} />
             <Divider />
-            <RowIcon img={require('../img/loc.png')} text={`${this.state.user.adresse.adresse} ${this.state.user.adresse.cp} ${this.state.user.adresse.ville}`} />
+            <RowIcon img={require('../img/loc.png')} text={`${this.state.user.adresse} ${this.state.user.cp} ${this.state.user.ville}`} />
             <Divider />
             <RowIcon img={require('../img/mail.png')} text={this.state.user.mail} />
             <Divider />
