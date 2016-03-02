@@ -21,7 +21,12 @@ import Compatibility from './components/CompatibilityBar';
 import Divider from './components/tableDivider';
 import RowUserPercent from './components/rowUserPercent';
 import RowUserLast from './components/rowUserLast';
+import DayStat from './components/dayStat';
+import moment from 'moment';
+import fr from 'moment/locale/fr';
 import {green, black} from './colors';
+
+
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -119,26 +124,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     paddingVertical: 10
-  },
-  statsBarContainer: {
-    flex:1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-    transform: [{translateX: -15}]
-  },
-  statsBar: {
-    width: 8,
-    height: 100,
-    backgroundColor: green
-  },
-  statsBarText: {
-    fontSize: 12,
-    transform: [{rotate: '-90deg'}, {translateX: 12}, {translateY: 6}],
-  },
-  percentageSquare: {
-    backgroundColor: black,
-    padding: 5,
   }
 
 });
@@ -185,15 +170,23 @@ class Stats extends Component {
             }
           }
         }
-      ]
+      ],
+      stats: Array.apply(null, new Array(7)).map(i => {
+        return Math.floor(Math.random() * (100 - 1));
+      })
     }
 
   }
 
   render () {
-    const users = this.state.user.map((user, i) => {
+    const users = this.state.user.map(user => {
         return <RowUserPercent key={user.user.nom} img={require('../img/avatar-f.jpg')} press={this._handlePress}
                         infos={user}/>
+    });
+
+    const maxDay = Math.max.apply(null, this.state.stats);
+    const days = this.state.stats.map((day, i) => {
+      return <DayStat key={i} date={moment(fr).subtract(i, 'day')} nb={day} max={maxDay} />
     });
     return (
       <ScrollView style={styles.mainContainer}>
@@ -217,60 +210,7 @@ class Stats extends Component {
               <Text style={styles.tableSectionText}>Vos match de la semaine</Text>
             </View>
             <View style={styles.statsContainer}>
-              <View>
-                <View style={styles.statsBarContainer}>
-                  <Text style={styles.statsBarText}>Lundi</Text>
-                  <View style={styles.statsBar}></View>
-                </View>
-                <View style={styles.percentageSquare}>
-                  <Text style={{color: 'white'}}>10</Text>
-                </View>
-              </View>
-              <View>
-                <View style={styles.statsBarContainer}>
-                  <Text style={styles.statsBarText}>Lundi</Text>
-                  <View style={styles.statsBar}></View>
-                </View>
-                <View style={styles.percentageSquare}>
-                  <Text style={{color: 'white'}}>10</Text>
-                </View>
-              </View>
-              <View>
-                <View style={styles.statsBarContainer}>
-                  <Text style={styles.statsBarText}>Lundi</Text>
-                  <View style={styles.statsBar}></View>
-                </View>
-                <View style={styles.percentageSquare}>
-                  <Text style={{color: 'white'}}>10</Text>
-                </View>
-              </View>
-              <View>
-                <View style={styles.statsBarContainer}>
-                  <Text style={styles.statsBarText}>Lundi</Text>
-                  <View style={styles.statsBar}></View>
-                </View>
-                <View style={styles.percentageSquare}>
-                  <Text style={{color: 'white'}}>10</Text>
-                </View>
-              </View>
-              <View>
-                <View style={styles.statsBarContainer}>
-                  <Text style={styles.statsBarText}>Lundi</Text>
-                  <View style={styles.statsBar}></View>
-                </View>
-                <View style={styles.percentageSquare}>
-                  <Text style={{color: 'white'}}>10</Text>
-                </View>
-              </View>
-              <View>
-                <View style={styles.statsBarContainer}>
-                  <Text style={styles.statsBarText}>Lundi</Text>
-                  <View style={styles.statsBar}></View>
-                </View>
-                <View style={styles.percentageSquare}>
-                  <Text style={{color: 'white'}}>10</Text>
-                </View>
-              </View>
+              {days}
             </View>
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Vos meilleurs matchs</Text>

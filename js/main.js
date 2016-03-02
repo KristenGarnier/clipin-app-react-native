@@ -17,6 +17,7 @@ import React,
 import Profil from './profil';
 import Params from './params';
 import Contacts from './contact';
+import Stats from './stats';
 import {green, black} from './colors';
 
 const styles = StyleSheet.create({
@@ -62,7 +63,18 @@ class Main extends Component {
                     icon={require('../img/stats-min.png')}
                     onPress={() => this.setState({selectedTab: 'Stats'})}
                 >
-                    <Text>FED UP OF THIS ERROR</Text>
+                  <NavigatorIOS
+                    style={{
+                            flex: 1
+                        }}
+                    initialRoute={{
+                            title: 'Statistiques',
+                            component: Stats
+                        }}
+                    barTintColor="black"
+                    tintColor="white"
+                    titleTextColor="white"
+                  />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     icon={require('../img/logo.png')}
