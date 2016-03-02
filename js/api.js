@@ -7,6 +7,10 @@ export function getRelations(id) {
   return fetch(`${dbUsers}/${id}/relations`)
 };
 
+export function getRelation(id, idRelation) {
+  return fetch(`${dbUsers}/${id}/relations/${idRelation}`);
+};
+
 export function addUser(data) {
   return fetch(dbUsers, {
     method: 'POST',
