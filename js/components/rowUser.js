@@ -31,7 +31,7 @@ export default ({img, press, infos}) => {
       <Image source={img} resizeMode="contain" style={styles.imgUser}/>
       <View style={styles.rowName}>
         <TouchableHighlight underlayColor="transparent" onPress={() => press(infos)} >
-        <Text>{infos.user.nom} {infos.user.prenom}</Text>
+        <Text>{infos.nom} {infos.prenom}</Text>
         </TouchableHighlight>
       </View>
       <TouchableHighlight underlayColor="transparent" onPress={() => press(infos)} >

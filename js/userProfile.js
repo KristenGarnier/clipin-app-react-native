@@ -122,11 +122,11 @@ class Profil extends Component {
         <Image source={require('../img/bureau.jpg')} resizeMode="cover" style={styles.imgContainer}>
           <Image source={require('../img/avatar-m.jpg')} resizeMode="contain" style={styles.imgUser}/>
           <View style={styles.textContainer}>
-            <Text style={styles.textName}>{this.state.user.prenom} {this.state.user.nom}</Text>
+            <Text style={styles.textName}>{this.state.prenom} {this.state.nom}</Text>
             <View style={styles.infosContainer}>
-              <Text style={styles.textInfos}>{this.state.user.age} ans</Text>
-              <Text style={styles.textInfos}>{this.state.user.metier}</Text>
-              <Text style={styles.textInfos}>{this.state.user.entreprise}</Text>
+              <Text style={styles.textInfos}>{this.state.age} ans</Text>
+              <Text style={styles.textInfos}>{this.state.metier}</Text>
+              <Text style={styles.textInfos}>{this.state.entreprise}</Text>
             </View>
 
           </View>
@@ -144,7 +144,7 @@ class Profil extends Component {
                 <Text style={[styles.tableSectionText, styles.centerText]}>Vous</Text>
               </View>
               <View style={[styles.tableSection]}>
-                <Text style={[styles.tableSectionText, styles.centerText]}>{this.state.user.prenom}</Text>
+                <Text style={[styles.tableSectionText, styles.centerText]}>{this.state.prenom}</Text>
               </View>
             </View>
             <View style={styles.containerCompatibilityPoints}>
@@ -155,17 +155,17 @@ class Profil extends Component {
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Coordonnées</Text>
             </View>
-            <RowIcon img={require('../img/tel.png')} text={this.state.user.tel} />
+            <RowIcon img={require('../img/tel.png')} text={this.state.tel} />
             <Divider />
-            <RowIcon img={require('../img/loc.png')} text={`${this.state.user.adresse} ${this.state.user.cp} ${this.state.user.ville}`} />
+            <RowIcon img={require('../img/loc.png')} text={`${this.state.adresse} ${this.state.cp} ${this.state.ville}`} />
             <Divider />
-            <RowIcon img={require('../img/mail.png')} text={this.state.user.mail} />
+            <RowIcon img={require('../img/mail.png')} text={this.state.email} />
             <Divider />
-            <RowIcon img={require('../img/profession.png')} text={this.state.user.metier} />
+            <RowIcon img={require('../img/profession.png')} text={this.state.metier} />
             <Divider />
-            <RowIcon img={require('../img/bougie.png')} text={`${this.state.user.age} ans`} />
+            <RowIcon img={require('../img/bougie.png')} text={`${this.state.age} ans`} />
             <Divider />
-            <RowIcon img={require('../img/entreprise.png')} text={this.state.user.entreprise} />
+            <RowIcon img={require('../img/entreprise.png')} text={this.state.entreprise} />
             <Divider />
           </View>
 

@@ -17,6 +17,7 @@ import React, {
 import RowUser from './components/rowUser';
 import UserProfil from './userProfile';
 import {green} from './colors';
+import {getUsers} from './api';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -122,30 +123,26 @@ class Contact extends Component {
     this._handlePress = this._handlePress.bind(this);
 
     this.state = {
-      user: [
-        {
-          compatibilite: 33,
-          user: {
-            nom: 'Duroux',
-            prenom: 'Clement',
-            age: 37,
-            metier: 'coiffeur',
-            entreprise: 'Open Classroom',
-            mail: 'clement-duroux@gmail.com',
-            tel: '06.01.02.03.04',
-            adresse: '255, avenue du stage',
-            cp: 42000,
-            ville: 'ST ETIENNE'
-          }
-        }
-      ]
-    }
+      user: []
+    };
 
+    this.request = getUsers;
+  }
+
+  componentDidMount() {
+    this.request
+      .then(res => {
+        this.setState({
+          user: res.map(user => Object.assign(user, {compatibilite: 55}))
+        });
+      })
+      .catch(error => console.error(error));
   }
 
   render () {
+    console.log(this.state.user);
     const users = this.state.user.map((user, i) => {
-      return <RowUser key={user.user.nom} img={require('../img/avatar-f.jpg')} press={this._handlePress}
+      return <RowUser key={user.uuid} img={require('../img/avatar-f.jpg')} press={this._handlePress}
                       infos={user}/>
     });
     return (
@@ -176,7 +173,7 @@ class Contact extends Component {
 
   _handlePress (data) {
     this.props.navigator.push({
-      title: `${data.user.nom} ${data.user.prenom}`,
+      title: `${data.nom} ${data.prenom}`,
       component: UserProfil,
       passProps: {
         data: data
