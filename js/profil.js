@@ -173,7 +173,11 @@ class Profil extends Component {
       title: 'Modifer',
       component: ProfilModify,
       passProps: {
-        data: this.state.user
+        data: this.state.user,
+        change: (data) => {
+          console.log(data);
+          this.setState({user: data});
+        }
       }
     })
   }

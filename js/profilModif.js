@@ -86,6 +86,7 @@ class Profil extends Component {
     this._handlePicker = this._handlePicker.bind(this);
     this._renderAdvanced = this._renderAdvanced.bind(this);
     this._handlePress = this._handlePress.bind(this);
+    this._handleChange = this._handleChange.bind(this);
 
     this.state = Object.assign(props.data, {
       etre: etreOptions[ 0 ],
@@ -181,7 +182,11 @@ class Profil extends Component {
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
-                onChangeText={(nom) => this.setState({nom})}
+                onChangeText={(nom) => {
+                    this.setState({nom});
+                    this._handleChange(this.state)
+                  }
+                }
                 value={this.state.nom}
                 placeholder="Votre nom"
                 autoCorrect={false}
@@ -192,7 +197,11 @@ class Profil extends Component {
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
-                onChangeText={(prenom) => this.setState({prenom})}
+                onChangeText={(prenom) => {
+                    this.setState({prenom});
+                    this._handleChange(this.state)
+                  }
+                }
                 value={this.state.prenom}
                 placeholder="Votre prénom"
                 autoCorrect={false}
@@ -203,10 +212,14 @@ class Profil extends Component {
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
-                onChangeText={(age) => this.setState({age})}
-                value={this.state.age}
+                onChangeText={(age) => {
+                    this.setState({age});
+                    this._handleChange(this.state)
+                  }
+                }
+                value={String(this.state.age)}
                 keyboardType="number-pad"
-                placeholder="Votre âge"
+                placeholder="Numéro de téléphone"
                 autoCorrect={false}
                 placeholderTextColor={grey}
                 clearButtonMode="while-editing"
@@ -235,7 +248,11 @@ class Profil extends Component {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              onChangeText={(metier) => this.setState({metier})}
+              onChangeText={(metier) => {
+                    this.setState({metier});
+                    this._handleChange(this.state)
+                  }
+                }
               value={this.state.metier}
               placeholder="Métier"
               placeholderTextColor={grey}
@@ -245,7 +262,11 @@ class Profil extends Component {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              onChangeText={(email) => this.setState({email})}
+              onChangeText={(email) => {
+                    this.setState({email});
+                    this._handleChange(this.state)
+                  }
+                }
               value={this.state.email}
               keyboardType="email-address"
               placeholder="Email"
@@ -257,7 +278,11 @@ class Profil extends Component {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              onChangeText={(num) => this.setState({num})}
+              onChangeText={(num) => {
+                    this.setState({num});
+                    this._handleChange(this.state)
+                  }
+                }
               value={this.state.tel}
               keyboardType="number-pad"
               placeholder="Numéro de téléphone"
@@ -269,7 +294,11 @@ class Profil extends Component {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              onChangeText={(adresse) => this.setState({adresse})}
+              onChangeText={(adresse) => {
+                    this.setState({adresse});
+                    this._handleChange(this.state)
+                  }
+                }
               value={this.state.adresse}
               placeholder="Adresse"
               autoCorrect={false}
@@ -280,7 +309,11 @@ class Profil extends Component {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              onChangeText={(cp) => this.setState({cp})}
+              onChangeText={(cp) => {
+                    this.setState({cp});
+                    this._handleChange(this.state)
+                  }
+                }
               value={this.state.cp}
               keyboardType="number-pad"
               placeholder="Code postal"
@@ -292,7 +325,11 @@ class Profil extends Component {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              onChangeText={(ville) => this.setState({ville})}
+              onChangeText={(ville) => {
+                    this.setState({ville});
+                    this._handleChange(this.state)
+                  }
+                }
               value={this.state.ville}
               placeholder="Ville"
               autoCorrect={false}
@@ -303,7 +340,11 @@ class Profil extends Component {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              onChangeText={(entreprise) => this.setState({entreprise})}
+              onChangeText={(entreprise) => {
+                    this.setState({entreprise});
+                    this._handleChange(this.state)
+                  }
+                }
               value={this.state.entreprise}
               placeholder="Nom de l'entreprise"
               autoCorrect={false}
@@ -341,6 +382,9 @@ class Profil extends Component {
     })
   }
 
+  _handleChange (state) {
+    this.props.change(state);
+  }
 }
 
 export default Profil;
