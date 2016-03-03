@@ -17,7 +17,7 @@ import React, {
 import RowUser from './components/rowUser';
 import UserProfil from './userProfile';
 import {green} from './colors';
-import {getUsers, getRelations} from './api';
+import {getRelations} from './api';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -126,23 +126,21 @@ class Contact extends Component {
       user: []
     };
 
-    this.request = getUsers;
+    this.request = getRelations(1);
   }
 
   componentDidMount () {
     this.request
-      .then(res => {
-        this.setState({
-          user: res.map(user => Object.assign(user, { compatibilite: 55 }))
-        });
-      })
+      .then(res => res.json())
+      .then(res => this.setState({user: res}))
       .catch(error => console.error(error));
   }
 
   render () {
-    const users = this.state.user.map((user, i) => {
-      return <RowUser key={user.uuid} img={require('../img/avatar-f.jpg')} press={this._handlePress}
-                      infos={user}/>
+    const users = this.state.user.map(user => {
+      user.target = Object.assign(user.target, { compatibilite : user.compatibilite});
+      return <RowUser key={user.target.uuid} img={require('../img/avatar-f.jpg')} press={this._handlePress}
+                      infos={user.target}/>
     });
     return (
       <ScrollView style={styles.mainContainer}>
