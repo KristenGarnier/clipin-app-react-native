@@ -50,10 +50,10 @@ export default ({infos, img, press}) => {
   return <View style={styles.userLast}>
     <Image source={img} resizeMode="contain" style={styles.imgUser} />
     <View style={styles.rowUserInfos}>
-      <Text style={styles.userNameBold}>{infos.user.prenom} {infos.user.nom}</Text>
-      <Text>{infos.user.age} ans</Text>
-      <Text>{infos.user.metier}</Text>
-      <Text>{infos.user.entreprise}</Text>
+      <Text style={styles.userNameBold}>{infos.target.prenom} {infos.target.nom}</Text>
+      <Text>{infos.target.age} ans</Text>
+      <Text>{infos.target.metier}</Text>
+      <Text>{infos.target.entreprise}</Text>
     </View>
     <TouchableHighlight underlayColor="transparent" onPress={() => press(infos)}>
       <Image source={require('../../img/voir-plus.png')} />

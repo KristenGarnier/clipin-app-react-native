@@ -18,6 +18,8 @@ import Home from './main';
 
 import Button from 'apsl-react-native-button';
 import ExNavigator from '@exponent/react-native-navigator';
+import {getUser} from './api';
+import {setState} from './stateManager';
 import Routes from './routes';
 
 import {green} from './colors';
@@ -195,11 +197,14 @@ class Login extends Component {
     }
 
     _handleNav() {
-        //const route = Routes.getPuckRoute();
-        //this.props.navigator.push(route);
+        getUser(this.state.login || 1)
+        .then(res => res.json())
+        .then(res => {
+            setState(res);
 
-        this.setState({
-            logged: true
+            this.setState({
+                logged: true
+            });
         });
     }
 }

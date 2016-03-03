@@ -17,7 +17,8 @@ import React, {
 import RowUser from './components/rowUser';
 import UserProfil from './userProfile';
 import {green} from './colors';
-import {getRelations} from './api';
+import {getRelations, getUser} from './api';
+import {getRelation} from './stateManager';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -123,17 +124,12 @@ class Contact extends Component {
     this._handlePress = this._handlePress.bind(this);
 
     this.state = {
-      user: []
+      user: getRelation()
     };
 
-    this.request = getRelations(1);
   }
 
   componentDidMount () {
-    this.request
-      .then(res => res.json())
-      .then(res => this.setState({user: res}))
-      .catch(error => console.error(error));
   }
 
   render () {

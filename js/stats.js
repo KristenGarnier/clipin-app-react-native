@@ -22,11 +22,10 @@ import Divider from './components/tableDivider';
 import RowUserPercent from './components/rowUserPercent';
 import RowUserLast from './components/rowUserLast';
 import DayStat from './components/dayStat';
+import {get10highest, getLastClip} from './stateManager';
 import moment from 'moment';
 import fr from 'moment/locale/fr';
 import {green, black} from './colors';
-
-
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -136,51 +135,19 @@ class Stats extends Component {
     this._handlePress = this._handlePress.bind(this);
 
     this.state = {
-      user: [
-        {
-          compatibilite: 33,
-          user: {
-            nom: 'Duroux',
-            prenom: 'Clement',
-            age: 37,
-            metier: 'coiffeur',
-            entreprise: 'Open Classroom',
-            mail: 'clement-duroux@gmail.com',
-            tel: '06.01.02.03.04',
-            adresse: {
-              adresse: '255, avenue du stage',
-              cp: 42000,
-              ville: 'ST ETIENNE'
-            }
-          }
-        }, {
-          compatibilite: 69,
-          user: {
-            nom: 'Albahani',
-            prenom: 'Malÿka',
-            age: 23,
-            metier: 'Eboueuse',
-            entreprise: 'Municipalité',
-            mail: 'malyka-albahani@gmail.com',
-            tel: '06.01.02.03.04',
-            adresse: {
-              adresse: '255, avenue de la galère',
-              cp: 42000,
-              ville: 'ST ETIENNE'
-            }
-          }
-        }
-      ],
+      user: get10highest(),
       stats: Array.apply(null, new Array(7)).map(i => {
         return Math.floor(Math.random() * (100 - 1));
-      })
+      }),
+      last: getLastClip()
     }
 
   }
 
   render () {
+    console.log(this.state.last);
     const users = this.state.user.map(user => {
-        return <RowUserPercent key={user.user.nom} img={require('../img/avatar-f.jpg')} press={this._handlePress}
+        return <RowUserPercent key={user.target.nom} img={require('../img/avatar-f.jpg')} press={this._handlePress}
                         infos={user}/>
     });
 
@@ -202,7 +169,10 @@ class Stats extends Component {
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Votre dernier match</Text>
             </View>
-            <RowUserLast img={require('../img/avatar-m.jpg')} infos={this.state.user[0]} press={this._handlePress} />
+            {this.state.user[0] ?
+            <RowUserLast img={require('../img/avatar-m.jpg')} infos={this.state.last} press={this._handlePress} />:
+              <Text>NOP</Text>
+            }
             <View style={styles.compatibiliteContainer}>
               <Compatibility percentage='33' width={width}/>
             </View>
@@ -225,10 +195,10 @@ class Stats extends Component {
 
   _handlePress (data) {
     this.props.navigator.push({
-      title: `${data.user.nom} ${data.user.prenom}`,
+      title: `${data.target.nom} ${data.target.prenom}`,
       component: UserProfil,
       passProps: {
-        data: data
+        data: Object.assign(data.target, {compatibilite: data.compatibilite})
       }
     })
   }

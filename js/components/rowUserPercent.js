@@ -53,9 +53,9 @@ export default ({infos, img, press}) => {
     <View style={styles.userLast}>
       <Image source={img} resizeMode="contain" style={styles.imgUser} />
       <View style={styles.rowUserInfos}>
-        <Text style={styles.userNameBold}>{infos.user.prenom} {infos.user.nom}</Text>
-        <Text>{infos.user.metier}</Text>
-        <Text>{infos.user.entreprise}</Text>
+        <Text style={styles.userNameBold}>{infos.target.prenom} {infos.target.nom}</Text>
+        <Text>{infos.target.metier}</Text>
+        <Text>{infos.target.entreprise}</Text>
       </View>
       <View style={styles.userPercent}>
         <Text style={styles.percentNumber}>{infos.compatibilite}</Text>
