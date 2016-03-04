@@ -135,7 +135,7 @@ class Contact extends Component {
   render () {
     const users = this.state.user.map(user => {
       user.target = Object.assign(user.target, { compatibilite : user.compatibilite});
-      return <RowUser key={user.target.uuid} img={require('../img/avatar-f.jpg')} press={this._handlePress}
+      return <RowUser key={user.target.uuid} img={{uri: user.target.image, scale: 3}} press={this._handlePress}
                       infos={user.target}/>
     });
     return (

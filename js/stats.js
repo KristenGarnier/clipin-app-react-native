@@ -147,7 +147,7 @@ class Stats extends Component {
   render () {
     console.log(this.state.last);
     const users = this.state.user.map(user => {
-        return <RowUserPercent key={user.target.nom} img={require('../img/avatar-f.jpg')} press={this._handlePress}
+        return <RowUserPercent key={user.target.nom} img={{uri: user.target.image, scale: 3}} press={this._handlePress}
                         infos={user}/>
     });
 
@@ -170,7 +170,7 @@ class Stats extends Component {
               <Text style={styles.tableSectionText}>Votre dernier match</Text>
             </View>
             {this.state.user[0] ?
-            <RowUserLast img={require('../img/avatar-m.jpg')} infos={this.state.last} press={this._handlePress} />:
+            <RowUserLast img={{uri: this.state.last.image, scale: 3}} infos={this.state.last} press={this._handlePress} />:
               <Text>NOP</Text>
             }
             <View style={styles.compatibiliteContainer}>

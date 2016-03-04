@@ -118,7 +118,7 @@ class Profil extends Component {
     return (
       <ScrollView style={styles.mainContainer}>
         <Image source={require('../img/bureau.jpg')} resizeMode="cover" style={styles.imgContainer}>
-          <Image source={require('../img/avatar-m.jpg')} resizeMode="contain" style={styles.imgUser}/>
+          <Image source={{uri: this.state.image, scale: 3}} resizeMode="contain" style={styles.imgUser}/>
           <View style={styles.textContainer}>
             <Text style={styles.textName}>{this.state.prenom} {this.state.nom}</Text>
             <View style={styles.infosContainer}>
