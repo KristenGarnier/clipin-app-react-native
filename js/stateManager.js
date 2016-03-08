@@ -21,22 +21,37 @@ class StateManager {
     return this.state;
   }
 
-  getRelation() {
+  getRelation () {
     return this.state.relations;
   }
 
-  get10highest() {
+  get10highest () {
     return _.sortBy(this.state.relations, 'compatibilite')
       .reverse()
       .slice(0, 9);
   }
 
-  getLastClip() {
+  getLastClip () {
     return _.sortBy(this.state.relations, 'date')
       .reverse()[ 0 ];
   }
 
-  updateUser(user){
+  addRelation (user) {
+    emitter.emit(constants.ADD_RELATION, { idRelation: user.id, id: this.state.id });
+    this.state.relations = [
+      ...this.state.relations,
+      user
+    ]
+  }
+
+  removeRelation (user) {
+    emitter.emit(constants.REMOVE_RELATION, { idRelation: user.id, id: this.state.id });
+    this.state.relations = this.state.relations.filter(relation => {
+      return relation.id !== user.id;
+    });
+  }
+
+  updateUser (user) {
     this.setUser(user);
     this.emitUpdate(user);
   }

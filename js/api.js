@@ -23,7 +23,6 @@ export function init() {
       }),
       body: JSON.stringify(data)
     })
-    .then(res => res.json())
     .then(_ => emitter.emit(constants.USER_ADDED))
   });
 
@@ -35,7 +34,6 @@ export function init() {
       }),
       body: JSON.stringify({user: idRelation})
     })
-    .then(res => res.json())
     .then(_ => emitter.emit(constants.RELATION_ADDED))
   });
 
@@ -46,7 +44,6 @@ export function init() {
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.json())
     .then(_ => emitter.emit(constants.RELATION_DELETED))
   });
 
