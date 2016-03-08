@@ -1,16 +1,16 @@
 import _ from "underscore";
 import {updateUser as updateUserApi, init} from './api';
 init();
-import {EventEmitter} from 'fbemitter';
+import emitter from './Emitter';
 import constants from './constants';
 
-const EventStateManager = new EventEmitter();
-
-
-class StateManager extends EventEmitter {
+class StateManager {
   constructor () {
-    super();
     this.state = {};
+
+    this.emitUpdate = _.debounce((user) => {
+      emitter.emit(constants.UPDATE_USER, user);
+    }, 1000);
   }
 
   setUser (newState) {
@@ -37,45 +37,15 @@ class StateManager extends EventEmitter {
   }
 
   updateUser(user){
-    this.setState(user);
-    this.emit(constants.UPDATE_USER, user);
+    this.setUser(user);
+    this.emitUpdate(user);
   }
 }
 
 const StateManagerInitialize = new StateManager();
 
-EventStateManager.addListener(constants.USER_GETTED, user => {
-  StateManagerInitialize.setState(user);
+emitter.addListener(constants.USER_GETTED, user => {
+  StateManagerInitialize.setUser(user);
 });
 
 export default StateManagerInitialize;
-
-//export function setState (newState) {
-//  state = newState;
-//}
-//
-//export function getUser () {
-//  return state;
-//}
-//
-//export function getRelation () {
-//  return state.relations;
-//}
-//
-//export function get10highest () {
-//  return _.sortBy(state.relations, 'compatibilite')
-//    .reverse()
-//    .slice(0, 9);
-//}
-//
-//export function getLastClip () {
-//  return _.sortBy(state.relations, 'date')
-//    .reverse()[ 0 ];
-//}
-//
-//export function updateUser (user) {
-//  setState(user);
-//  console.log('updateUser');
-//  updateUserApi(user);
-//}
-

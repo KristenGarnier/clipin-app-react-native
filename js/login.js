@@ -11,7 +11,8 @@ import React, {
   Image,
   TextInput,
   Dimensions,
-  ScrollView
+  ScrollView,
+  ActivityIndicatorIOS
 } from 'react-native';
 
 import Home from './main';
@@ -42,7 +43,6 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     width: width / 2.5,
     marginRight: 20,
-    marginTop: 40
   },
   backDrop: {
     flex: 1,
@@ -113,6 +113,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     textAlign: 'center',
     color: 'white'
+  },
+  indicator: {
+    alignSelf: 'center',
+    paddingRight: 50
+  },
+  indicatorButton: {
+    flex:1,
+    flexDirection: 'row',
+    marginTop: 40
   }
 });
 
@@ -126,14 +135,15 @@ class Login extends Component {
     this.state = {
       login: '',
       password: '',
-      logged: false
+      logged: false,
+      isLogging: false
     };
 
   }
 
   componentDidMount () {
     this.listener = emitter.addListener(constants.USER_GETTED, user => {
-      StateManager.setUser(res);
+      StateManager.setUser(user);
       this.setState({
         logged: true
       });
@@ -181,7 +191,12 @@ class Login extends Component {
                 <Text style={styles.oubli}>
                   Mot de passe oublié ?
                 </Text>
-                <View>
+                <View style={styles.indicatorButton}>
+                    <ActivityIndicatorIOS
+                      animating={this.state.isLogging}
+                      style={styles.indicator}
+                      size="large"
+                    />
                   <Button style={styles.button} textStyle={{fontSize: 18}} onPress={this._handleNav}>
                     -->
                   </Button>
@@ -211,6 +226,9 @@ class Login extends Component {
 
   _handleNav () {
     emitter.emit(constants.GET_USER, this.state.login || 1);
+    this.setState({
+      isLogging: true
+    })
   }
 }
 
