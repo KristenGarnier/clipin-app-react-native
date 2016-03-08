@@ -170,7 +170,7 @@ class Stats extends Component {
               <Text style={styles.tableSectionText}>Votre dernier match</Text>
             </View>
             {this.state.user[0] ?
-            <RowUserLast img={{uri: this.state.last.image, scale: 3}} infos={this.state.last} press={this._handlePress} />:
+            <RowUserLast img={{uri: this.state.last.target.image, scale: 3}} infos={this.state.last} press={this._handlePress} />:
               <Text>NOP</Text>
             }
             <View style={styles.compatibiliteContainer}>

@@ -156,7 +156,6 @@ class Contact extends Component {
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Mes clips manuels</Text>
             </View>
-            {users}
           </View>
 
         </View>
