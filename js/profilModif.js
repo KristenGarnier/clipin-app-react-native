@@ -173,7 +173,6 @@ class Profil extends Component {
   }
 
   render () {
-    console.log(this.state.age);
     return (
       <ScrollView >
         <View style={styles.container}>

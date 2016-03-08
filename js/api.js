@@ -1,7 +1,59 @@
 const dbUsers = 'http://127.0.0.1:8000/api/users';
+import _ from "underscore";
+import constants from './constants'
+import emitter from './Emitter';
 
-export const getUsers = fetch(dbUsers)
-    .then(res => res.json());
+
+export function init() {
+  emitter.addListener(constants.UPDATE_USER, user => {
+    fetch(`${dbUsers}/${user.id}`,{
+      method: 'PATCH',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(user)
+    })
+      .then(res => console.log(res));
+  });
+
+  emitter.addListener(constants.ADD_USER, (data) => {
+    fetch(dbUsers, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(data)
+    })
+  });
+
+  emitter.addListener(constants.ADD_RELATION, ({id, idRelation}) => {
+    fetch(`${dbUsers}/${id}/relations`, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({user: idRelation})
+    })
+  });
+
+  emitter.addListener(constants.REMOVE_RELATION, ({id, idRelation}) => {
+    fetch(`${dbUsers}/${id}/relations/${idRelation}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+  });
+
+  emitter.addListener(constants.GET_USER, id => {
+    fetch(`${dbUsers}/${id}`)
+      .then(res => res.json())
+      .then(res => emitter.emit(constants.USER_GETTED, res));
+  });
+}
+
+//export const getUsers = fetch(dbUsers)
+//    .then(res => res.json());
 
 export function getRelations(id) {
   return fetch(`${dbUsers}/${id}/relations`)
@@ -43,3 +95,15 @@ export function removeRelation(id, idRelation) {
     })
   })
 };
+
+export const updateUser = _.debounce((user) => {
+  fetch(`${dbUsers}/${user.id}`,{
+    method: 'PATCH',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify(user)
+  })
+    .then(res => console.log(res));
+}, 1000);
+

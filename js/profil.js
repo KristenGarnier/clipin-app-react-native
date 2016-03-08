@@ -18,7 +18,7 @@ import Divider from './components/tableDivider';
 import Row from './components/tableRow';
 import Table from './components/tableParam';
 import {criteria, advanced, general} from './tableData';
-import {getUser} from './stateManager';
+import StateManager, {getUser, updateUser} from './stateManager';
 import ProfilModify from './profilModif';
 
 import {green} from './colors';
@@ -105,7 +105,7 @@ class Profil extends Component {
 
     this.state = {
       avanced: false,
-      user: getUser()
+      user: StateManager.getUser()
     }
 
   }
@@ -177,7 +177,7 @@ class Profil extends Component {
       passProps: {
         data: this.state.user,
         change: (data) => {
-          console.log(data);
+          updateUser(data);
           this.setState({user: data});
         }
       }

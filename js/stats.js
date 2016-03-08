@@ -22,7 +22,7 @@ import Divider from './components/tableDivider';
 import RowUserPercent from './components/rowUserPercent';
 import RowUserLast from './components/rowUserLast';
 import DayStat from './components/dayStat';
-import {get10highest, getLastClip} from './stateManager';
+import StateManager from './stateManager';
 import moment from 'moment';
 import fr from 'moment/locale/fr';
 import {green, black} from './colors';
@@ -135,11 +135,11 @@ class Stats extends Component {
     this._handlePress = this._handlePress.bind(this);
 
     this.state = {
-      user: get10highest(),
+      user: StateManager.get10highest(),
       stats: Array.apply(null, new Array(7)).map(i => {
         return Math.floor(Math.random() * (100 - 1));
       }),
-      last: getLastClip()
+      last: StateManager.getLastClip()
     }
 
   }
