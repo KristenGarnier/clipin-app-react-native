@@ -13,7 +13,6 @@ export default routes = {
             // proxying the `didfocus` event that Navigator emits, so refer to
             // Navigator's source code for the semantics.
             onDidFocus(event) {
-                console.log('Home Scene received focus.');
             },
 
             // Return a string to display in the title section of the navigation bar.

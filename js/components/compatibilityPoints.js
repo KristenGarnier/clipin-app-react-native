@@ -4,7 +4,6 @@ import {selectColor} from '../utils';
 
 const width = Dimensions.get('window').width;
 const divided3 = width / 3;
-console.log(divided3);
 
 const styles = StyleSheet.create({
   rowCompatibilityPoints: {

@@ -23,6 +23,8 @@ import RowUserPercent from './components/rowUserPercent';
 import RowUserLast from './components/rowUserLast';
 import DayStat from './components/dayStat';
 import StateManager from './stateManager';
+import emitter from './Emitter';
+import constants from './constants';
 import moment from 'moment';
 import fr from 'moment/locale/fr';
 import {green, black} from './colors';
@@ -144,16 +146,28 @@ class Stats extends Component {
 
   }
 
+  componentDidMount () {
+    this.listener = emitter.addListener(constants.USER_ADDED, () => {
+      this.setState({
+        user: StateManager.get10highest(),
+        last: StateManager.getLastClip()
+      });
+    })
+  }
+
+  componentWillUnmount () {
+    this.listener.remove();
+  }
+
   render () {
-    console.log(this.state.last);
     const users = this.state.user.map(user => {
-        return <RowUserPercent key={user.target.nom} img={{uri: user.target.image, scale: 3}} press={this._handlePress}
-                        infos={user}/>
+      return <RowUserPercent key={user.target.nom} img={{uri: user.target.image, scale: 3}} press={this._handlePress}
+                             infos={user}/>
     });
 
     const maxDay = Math.max.apply(null, this.state.stats);
     const days = this.state.stats.map((day, i) => {
-      return <DayStat key={i} date={moment(fr).subtract(i, 'day')} nb={day} max={maxDay} />
+      return <DayStat key={i} date={moment(fr).subtract(i, 'day')} nb={day} max={maxDay}/>
     });
     return (
       <ScrollView style={styles.mainContainer}>
@@ -169,23 +183,48 @@ class Stats extends Component {
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Votre dernier match</Text>
             </View>
-            {this.state.user[0] ?
-            <RowUserLast img={{uri: this.state.last.target.image, scale: 3}} infos={this.state.last} press={this._handlePress} />:
-              <Text>NOP</Text>
+
+            {
+              this.state.user[ 0 ] ?
+                <View>
+                  <RowUserLast img={{uri: this.state.last.target.image, scale: 3}}
+                               infos={this.state.last} press={this._handlePress}/>
+                  <View style={styles.compatibiliteContainer}>
+                    <Compatibility percentage={this.state.last.compatibilite} width={width}/>
+                  </View>
+                </View>
+                :
+
+                <Text>Pas encore de clip</Text>
+
             }
-            <View style={styles.compatibiliteContainer}>
-              <Compatibility percentage='33' width={width}/>
-            </View>
+
+
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Vos match de la semaine</Text>
             </View>
-            <View style={styles.statsContainer}>
-              {days}
-            </View>
+
+            {
+              this.state.user[ 0 ] ?
+                <View style={styles.statsContainer}>
+                  {days}
+                </View>
+                :
+
+                <Text>Pas encore de clip</Text>
+
+            }
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Vos meilleurs matchs</Text>
             </View>
-            {users}
+            {
+              this.state.user[ 0 ] ?
+                users
+                :
+
+                <Text>Pas encore de clip</Text>
+
+            }
           </View>
 
         </View>
@@ -198,7 +237,7 @@ class Stats extends Component {
       title: `${data.target.nom} ${data.target.prenom}`,
       component: UserProfil,
       passProps: {
-        data: Object.assign(data.target, {compatibilite: data.compatibilite})
+        data: Object.assign(data.target, { compatibilite: data.compatibilite })
       }
     })
   }

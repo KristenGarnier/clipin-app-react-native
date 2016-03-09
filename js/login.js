@@ -2,6 +2,7 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
+
 'use strict';
 import React, {
   Component,
@@ -145,7 +146,8 @@ class Login extends Component {
     this.listener = emitter.addListener(constants.USER_GETTED, user => {
       StateManager.setUser(user);
       this.setState({
-        logged: true
+        logged: true,
+        isLogging: false
       });
     });
   }
