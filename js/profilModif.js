@@ -94,10 +94,7 @@ class Profil extends Component {
       advanced: false,
       diplome: diplomeOptions[ 0 ],
       preferences: '',
-      exp: '',
       hobbies: '',
-      skills: '',
-      salaire: '',
     });
 
   }
@@ -117,8 +114,8 @@ class Profil extends Component {
         <View style={styles.inputWrapper}>
           <TextInput
             style={styles.input}
-            onChangeText={(salaire) => this.setState({salaire})}
-            value={this.state.salaire}
+            onChangeText={(salaire_minimum) => {this.setState({salaire_minimum})}}
+            value={String(this.state.salaire_minimum)}
             keyboardType="number-pad"
             placeholder="Salaire minimum"
             autoCorrect={false}
@@ -137,8 +134,8 @@ class Profil extends Component {
         <View style={styles.inputWrapper}>
           <TextInput
             style={[styles.input, styles.bigInput]}
-            onChangeText={(exp) => this.setState({exp})}
-            value={this.state.exp}
+            onChangeText={(experiences_pro) => this.setState({experiences_pro})}
+            value={this.state.experiences_pro}
             placeholder="Expériences professionnelles"
             placeholderTextColor={grey}
             multiline={true}
@@ -147,8 +144,8 @@ class Profil extends Component {
         <View style={styles.inputWrapper}>
           <TextInput
             style={[styles.input, styles.bigInput]}
-            onChangeText={(skills) => this.setState({skills})}
-            value={this.state.skills}
+            onChangeText={(competence) => this.setState({competence})}
+            value={this.state.competence}
             placeholder="skills"
             placeholderTextColor={grey}
             multiline={true}
