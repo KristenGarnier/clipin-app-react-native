@@ -23,7 +23,7 @@ class Switch extends Component {
     });
     if (this.props.onValueChange) {
       if(this.props.name){
-        this.props.onValueChange(this.props.name);
+        this.props.onValueChange(value, this.props.name);
       }else {
         this.props.onValueChange(value);
       }

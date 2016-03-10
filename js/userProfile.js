@@ -14,6 +14,7 @@ import React, {
   ScrollView
 } from 'react-native';
 
+import Table from './components/tableParam';
 import Compatibility from './components/CompatibilityBar';
 import CompatibilityPoints from './components/compatibilityPoints';
 import RowIcon from './components/tableRowIcon';
@@ -115,6 +116,18 @@ class Profil extends Component {
   }
 
   render () {
+
+    const criteria = [
+      {
+        name: 'Je suis',
+        content: this.state.etre || 'Non définit'
+      },
+      {
+        name: 'Je recherche',
+        content: this.state.recherche || 'Non définit'
+      }
+    ];
+
     return (
       <ScrollView style={styles.mainContainer}>
         <Image source={require('../img/bureau.jpg')} resizeMode="cover" style={styles.imgContainer}>
@@ -126,11 +139,20 @@ class Profil extends Component {
               <Text style={styles.textInfos}>{this.state.metier}</Text>
               <Text style={styles.textInfos}>{this.state.entreprise}</Text>
             </View>
-
+            <View style={styles.infosContainer}>
+              <Text style={styles.textInfos}>Je suis : {this.state.etre}</Text>
+              <Text style={styles.textInfos}>Je recherche : {this.state.recherche}</Text>
+            </View>
           </View>
         </Image>
         <View style={styles.tableContainer}>
           <View>
+            <View style={styles.tableSection}>
+              <Text style={styles.tableSectionText}>Critères</Text>
+            </View>
+
+            <Table renders={criteria}/>
+
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Compatibilité avec moi</Text>
             </View>

@@ -101,17 +101,40 @@ class Profil extends Component {
 
     this._handlePress = this._handlePress.bind(this);
     this._handleModify = this._handleModify.bind(this);
+    this._handleSwitch = this._handleSwitch.bind(this);
 
     this.state = {
       avanced: false,
       user: StateManager.getUser(),
-      tel: true,
-      hobby: false
     };
+
+    if(this.state.user.parametres === '{}'){
+      this.state.user = Object.assign(this.state.user, {
+        parametres: {
+          hobby: false,
+          formation: false,
+          experience: false,
+          competence: false,
+          preference: false,
+          permis: false,
+          salaire: false,
+          tel: false,
+          age: false,
+          adresse: false,
+          email: false,
+          profession: false,
+          entreprise: false
+        }
+
+      })
+    } else {
+      this.state.user.parametres = JSON.parse(this.state.user.parametres);
+    }
+
+
   }
 
   _renderTable (general, advanced) {
-    console.log(general, advanced);
     if (this.state.avanced) return <Table renders={advanced}/>;
 
     return <Table renders={general}/>
@@ -121,68 +144,70 @@ class Profil extends Component {
 
     const advanced = [
       {
-        name : 'Hobbies',
-        content : <Swtich value={this.state.hobby} key={0.1} onValueChange={this._handleSwitch} name="hobby" />
+        name: 'Hobbies',
+        content: <Swtich value={this.state.user.parametres.hobby} key={0.1} onValueChange={this._handleSwitch}
+                         name="hobby"/>
       },
       {
-        name : 'Formation',
-        content : <Swtich value={false} key={0.2} name='formation' />
+        name: 'Formation',
+        content: <Swtich value={this.state.user.parametres.formation} key={0.2} name='formation' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Expérience',
-        content : <Swtich value={false} key={0.2} name='experience' />
+        name: 'Expérience',
+        content: <Swtich value={this.state.user.parametres.experience} key={0.2} name='experience' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Compétences',
-        content : <Swtich value={false} key={0.4} name='competence' />
+        name: 'Compétences',
+        content: <Swtich value={this.state.user.parametres.competence} key={0.4} name='competence' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Préférences',
-        content : <Swtich value={false} key={0.5} name='preference' />
+        name: 'Préférences',
+        content: <Swtich value={this.state.user.parametres.preference} key={0.5} name='preference' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Permis',
-        content : <Swtich value={false} key={0.6} name='permis' />
+        name: 'Permis',
+        content: <Swtich value={this.state.user.parametres.permis} key={0.6} name='permis' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Salaire minimum',
-        content : <Swtich value={false} key={0.7} name='salaire' />
+        name: 'Salaire minimum',
+        content: <Swtich value={this.state.user.parametres.salaire} key={0.7} name='salaire' onValueChange={this._handleSwitch}/>
       }
     ];
     const general = [
       {
-        name : 'Numéro de téléphone',
-        content : <Swtich value={this.state.tel} key={1.1} onValueChange={this._handleSwitch} name="tel" />
+        name: 'Numéro de téléphone',
+        content: <Swtich value={this.state.user.parametres.tel} key={1.1} onValueChange={this._handleSwitch}
+                         name="tel"/>
       },
       {
-        name : 'Nom & prénom',
-        content : <Swtich value={true} key={1.2} name='nom' />
+        name: 'Âge',
+        content: <Swtich value={this.state.user.parametres.age} key={1.3} name='age' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Âge',
-        content : <Swtich value={true} key={1.3} name='age' />
+        name: 'Adresse',
+        content: <Swtich value={this.state.user.parametres.adresse} key={1.4} name='adresse' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Adresse',
-        content : <Swtich value={true} key={1.4} name='adresse' />
+        name: 'Mail',
+        content: <Swtich value={this.state.user.parametres.email} key={1.5} name='email' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Mail',
-        content : <Swtich value={true} key={1.5} name='mail' />
+        name: 'Profession',
+        content: <Swtich value={this.state.user.parametres.profession} key={1.6} name='profession' onValueChange={this._handleSwitch}/>
       },
       {
-        name : 'Profession',
-        content : <Swtich value={true} key={1.6} name='profession' />
+        name: 'Entreprise',
+        content: <Swtich value={this.state.user.parametres.entreprise} key={1.2} name='entreprise' onValueChange={this._handleSwitch}/>
       }
     ];
     const criteria = [
       {
-        name : 'Je suis',
-        content : this.state.user.etre || 'Pas encore défini'
+        name: 'Je suis',
+        content: this.state.user.etre || 'Pas encore défini'
       },
       {
-        name : 'Je recherche',
-        content : this.state.user.recherche || 'Pas encore défini'
+        name: 'Je recherche',
+        content: this.state.user.recherche || 'Pas encore défini'
       }
     ];
 
@@ -241,8 +266,13 @@ class Profil extends Component {
     });
   }
 
-  _handleSwitch(name){
-    console.log(name);
+  _handleSwitch (value, name) {
+    this.state.user.parametres[name] = value;
+    this.setState(this.state);
+    const send = Object.create(this.state.user);
+    send.parametres = JSON.stringify(send.parametres);
+    StateManager.updateUser(send);
+    console.log(this.state);
   }
 
   _handleModify () {
@@ -253,7 +283,7 @@ class Profil extends Component {
         data: this.state.user,
         change: (data) => {
           StateManager.updateUser(data);
-          this.setState({user: data});
+          this.setState({ user: data });
         }
       }
     })
