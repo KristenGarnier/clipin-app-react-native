@@ -121,8 +121,6 @@ class Profil extends Component {
           tel: false,
           age: false,
           adresse: false,
-          email: false,
-          profession: false,
           entreprise: false
         }
 
@@ -186,14 +184,6 @@ class Profil extends Component {
       {
         name: 'Adresse',
         content: <Swtich value={this.state.user.parametres.adresse} key={1.4} name='adresse' onValueChange={this._handleSwitch}/>
-      },
-      {
-        name: 'Mail',
-        content: <Swtich value={this.state.user.parametres.email} key={1.5} name='email' onValueChange={this._handleSwitch}/>
-      },
-      {
-        name: 'Profession',
-        content: <Swtich value={this.state.user.parametres.profession} key={1.6} name='profession' onValueChange={this._handleSwitch}/>
       },
       {
         name: 'Entreprise',

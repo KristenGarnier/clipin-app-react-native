@@ -113,6 +113,13 @@ class Profil extends Component {
 
     this.state = props.data;
 
+    try {
+      const params = JSON.parse(this.state.parametres);
+      this.state.parametres = params;
+    } catch (e) {
+      console.log(e);
+    }
+
   }
 
   render () {
@@ -137,11 +144,13 @@ class Profil extends Component {
             <View style={styles.infosContainer}>
               <Text style={styles.textInfos}>{this.state.age} ans</Text>
               <Text style={styles.textInfos}>{this.state.metier}</Text>
-              <Text style={styles.textInfos}>{this.state.entreprise}</Text>
-            </View>
-            <View style={styles.infosContainer}>
-              <Text style={styles.textInfos}>Je suis : {this.state.etre}</Text>
-              <Text style={styles.textInfos}>Je recherche : {this.state.recherche}</Text>
+              {
+                this.state.parametres.entreprise ?
+                  <Text style={styles.textInfos}>{this.state.entreprise}</Text>
+                  :
+                  <View></View>
+              }
+
             </View>
           </View>
         </Image>
@@ -173,20 +182,59 @@ class Profil extends Component {
               <CompatibilityPoints pointYou="Naturisme" pointUser="Timide" comp="+"/>
             </View>
             <View style={styles.tableSection}>
-              <Text style={styles.tableSectionText}>Coordonnées</Text>
+              <Text style={styles.tableSectionText}>Informations complémentaires</Text>
             </View>
-            <RowIcon img={require('../img/tel.png')} text={this.state.tel} />
-            <Divider />
-            <RowIcon img={require('../img/loc.png')} text={`${this.state.adresse} ${this.state.cp} ${this.state.ville}`} />
-            <Divider />
-            <RowIcon img={require('../img/mail.png')} text={this.state.email} />
-            <Divider />
-            <RowIcon img={require('../img/profession.png')} text={this.state.metier} />
-            <Divider />
-            <RowIcon img={require('../img/bougie.png')} text={`${this.state.age} ans`} />
-            <Divider />
-            <RowIcon img={require('../img/entreprise.png')} text={this.state.entreprise} />
-            <Divider />
+            { this.state.parametres.tel ?
+              <View>
+                <RowIcon img={require('../img/tel.png')} text={this.state.tel}/>
+                <Divider />
+              </View> :
+              <View></View>
+            }
+
+            { this.state.parametres.adresse ?
+              <View>
+                <RowIcon img={require('../img/loc.png')}
+                         text={`${this.state.adresse} ${this.state.cp} ${this.state.ville}`}/>
+                <Divider />
+              </View>
+              :
+              <View></View>
+            }
+
+            <View>
+              <RowIcon img={require('../img/mail.png')} text={this.state.email}/>
+              <Divider />
+            </View>
+
+            {
+              this.state.parametres.profession ?
+                <View>
+                  <RowIcon img={require('../img/profession.png')} text={this.state.metier}/>
+                  <Divider />
+                </View> :
+                <View></View>
+            }
+
+            {
+              this.state.parametres.age ?
+                <View>
+                  <RowIcon img={require('../img/bougie.png')} text={`${this.state.age} ans`}/>
+                  <Divider />
+                </View> :
+                <View></View>
+            }
+
+            {
+              this.state.parametres.entreprise ?
+                <View>
+                  <RowIcon img={require('../img/entreprise.png')} text={this.state.entreprise}/>
+                  <Divider />
+                </View> :
+                <View></View>
+            }
+
+
           </View>
 
         </View>
