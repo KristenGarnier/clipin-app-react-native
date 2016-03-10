@@ -15,7 +15,6 @@ class Switch extends Component {
         value: false
       }
     }
-
   }
 
   _onValueChange (value) {
@@ -23,7 +22,11 @@ class Switch extends Component {
       value: value
     });
     if (this.props.onValueChange) {
-      this.props.onValueChange(value);
+      if(this.props.name){
+        this.props.onValueChange(this.props.name);
+      }else {
+        this.props.onValueChange(value);
+      }
     }
   }
 

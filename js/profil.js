@@ -17,9 +17,9 @@ import React, {
 import Divider from './components/tableDivider';
 import Row from './components/tableRow';
 import Table from './components/tableParam';
-import {criteria, advanced, general} from './tableData';
+import Swtich from './components/switch';
 import emitter from './Emitter';
-import StateManager, {getUser, updateUser} from './stateManager';
+import StateManager from './stateManager';
 import ProfilModify from './profilModif';
 
 import {green} from './colors';
@@ -104,18 +104,88 @@ class Profil extends Component {
 
     this.state = {
       avanced: false,
-      user: StateManager.getUser()
-    }
-
+      user: StateManager.getUser(),
+      tel: true,
+      hobby: false
+    };
   }
 
-  _renderTable () {
+  _renderTable (general, advanced) {
+    console.log(general, advanced);
     if (this.state.avanced) return <Table renders={advanced}/>;
 
     return <Table renders={general}/>
   }
 
   render () {
+
+    const advanced = [
+      {
+        name : 'Hobbies',
+        content : <Swtich value={this.state.hobby} key={0.1} onValueChange={this._handleSwitch} name="hobby" />
+      },
+      {
+        name : 'Formation',
+        content : <Swtich value={false} key={0.2} name='formation' />
+      },
+      {
+        name : 'Expérience',
+        content : <Swtich value={false} key={0.2} name='experience' />
+      },
+      {
+        name : 'Compétences',
+        content : <Swtich value={false} key={0.4} name='competence' />
+      },
+      {
+        name : 'Préférences',
+        content : <Swtich value={false} key={0.5} name='preference' />
+      },
+      {
+        name : 'Permis',
+        content : <Swtich value={false} key={0.6} name='permis' />
+      },
+      {
+        name : 'Salaire minimum',
+        content : <Swtich value={false} key={0.7} name='salaire' />
+      }
+    ];
+    const general = [
+      {
+        name : 'Numéro de téléphone',
+        content : <Swtich value={this.state.tel} key={1.1} onValueChange={this._handleSwitch} name="tel" />
+      },
+      {
+        name : 'Nom & prénom',
+        content : <Swtich value={true} key={1.2} name='nom' />
+      },
+      {
+        name : 'Âge',
+        content : <Swtich value={true} key={1.3} name='age' />
+      },
+      {
+        name : 'Adresse',
+        content : <Swtich value={true} key={1.4} name='adresse' />
+      },
+      {
+        name : 'Mail',
+        content : <Swtich value={true} key={1.5} name='mail' />
+      },
+      {
+        name : 'Profession',
+        content : <Swtich value={true} key={1.6} name='profession' />
+      }
+    ];
+    const criteria = [
+      {
+        name : 'Je suis',
+        content : this.state.user.etre || 'Pas encore défini'
+      },
+      {
+        name : 'Je recherche',
+        content : this.state.user.recherche || 'Pas encore défini'
+      }
+    ];
+
     return (
       <ScrollView style={styles.mainContainer}>
         <Image source={require('../img/bureau.jpg')} resizeMode="cover" style={styles.imgContainer}>
@@ -139,7 +209,9 @@ class Profil extends Component {
             <View style={styles.tableSection}>
               <Text style={styles.tableSectionText}>Mes Critères</Text>
             </View>
+
             <Table renders={criteria}/>
+
             <View style={styles.tableSectionContainer}>
               <View style={[styles.tableSection, this.state.avanced ? {} : {backgroundColor: '#323232'}]}>
                 <Text style={[styles.tableSectionText, styles.centerText]} onPress={() => {
@@ -150,7 +222,7 @@ class Profil extends Component {
                 <Text style={[styles.tableSectionText, styles.centerText]} onPress={this._handlePress}>Avancés</Text>
               </View>
             </View>
-            {this._renderTable()}
+            {this._renderTable(general, advanced)}
           </View>
 
         </View>
@@ -166,7 +238,11 @@ class Profil extends Component {
     }
     this.setState({
       avanced: !this.state.avanced
-    })
+    });
+  }
+
+  _handleSwitch(name){
+    console.log(name);
   }
 
   _handleModify () {

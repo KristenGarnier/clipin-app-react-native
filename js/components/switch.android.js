@@ -22,7 +22,9 @@ class Switch extends Component {
     this.setState({
       value: value
     });
-    if (this.props.onValueChange) {
+    if(this.props.name){
+      this.props.onValueChange(this.props.name);
+    }else {
       this.props.onValueChange(value);
     }
   }
