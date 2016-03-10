@@ -242,14 +242,14 @@ class Profil extends Component {
           <RowPicker
             name="Je suis"
             options={etreOptions}
-            selected={this.state.etre}
+            selected={this.state.etre || 'Choisissez votre statut'}
             submit={this._handlePicker}
             stateName="etre"
           />
           <RowPicker
             name="Je recherche"
             options={rechercheOptions}
-            selected={this.state.recherche}
+            selected={this.state.recherche || 'Choisissez votre recherche'}
             submit={this._handlePicker}
             stateName="recherche"
           />
