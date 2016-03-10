@@ -23,10 +23,9 @@ import Switch from './components/switch';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-var etreOptions = [ 'Ouvert(e) aux opportunitées', 'Déjà employé' ];
-var rechercheOptions = [ 'Un emploi', 'Un employé' ];
-var metiersOptions = [ 'Coiffeur', 'Sys admin', 'Développeur' ];
-var diplomeOptions = [ 'DUT', 'CAP', 'BTS', 'LICENCE 1', "LICENCE 2", "LICENCE 3", "LICENCE PRO", "MASTER PRO", 'DEUG', 'BAC', 'MASTER 1', 'MASTER 2', 'DOCTORAT', 'BACHELOR' ];
+const etreOptions = [ 'Ouvert(e) aux opportunitées', 'Déjà employé' ];
+const rechercheOptions = [ 'Un emploi', 'Un employé' ];
+const diplomeOptions = [ 'DUT', 'CAP', 'BTS', 'LICENCE 1', "LICENCE 2", "LICENCE 3", "LICENCE PRO", "MASTER PRO", 'DEUG', 'BAC', 'MASTER 1', 'MASTER 2', 'DOCTORAT', 'BACHELOR' ];
 
 const styles = StyleSheet.create({
   container: {
@@ -89,10 +88,10 @@ class Profil extends Component {
     this._handleChange = this._handleChange.bind(this);
 
     this.state = Object.assign(props.data, {
-      etre: etreOptions[ 0 ],
-      recherche: rechercheOptions[ 0 ],
       advanced: false,
     });
+
+    console.log(this.state);
 
   }
 
@@ -386,6 +385,7 @@ class Profil extends Component {
     obj[ stateName ] = option;
     this.setState(obj);
     this._handleChange(this.state);
+    console.log(this.state);
   }
 
   _handlePress () {
