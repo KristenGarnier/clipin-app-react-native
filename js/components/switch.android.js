@@ -1,33 +1,40 @@
 import React, {SwitchAndroid, Component} from 'react-native';
 
 class Switch extends Component {
-    constructor(){
-        super();
+  constructor (props) {
+    super(props);
 
-        this._onValueChange = this._onValueChange.bind(this);
+    this._onValueChange = this._onValueChange.bind(this);
 
-        this.state = {
-            value: false
-        }
+    if (this.props.value) {
+      this.state = {
+        value: this.props.value
+      }
+    } else {
+      this.state = {
+        value: false
+      }
     }
 
-    _onValueChange(value){
-        this.setState({
-            value: value
-        });
-        if(this.props.onValueChange){
-            this.props.onValueChange(value);
-        }
-    }
+  }
 
-    render(){
-        return (
-            <SwitchAndroid
-                onValueChange={this._onValueChange}
-                value={this.state.value}
-            />
-        )
+  _onValueChange (value) {
+    this.setState({
+      value: value
+    });
+    if (this.props.onValueChange) {
+      this.props.onValueChange(value);
     }
+  }
+
+  render () {
+    return (
+      <SwitchAndroid
+        onValueChange={this._onValueChange}
+        value={this.state.value}
+      />
+    )
+  }
 }
 
 export default Switch;

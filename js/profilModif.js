@@ -92,9 +92,6 @@ class Profil extends Component {
       etre: etreOptions[ 0 ],
       recherche: rechercheOptions[ 0 ],
       advanced: false,
-      diplome: diplomeOptions[ 0 ],
-      preferences: '',
-      hobbies: '',
     });
 
   }
@@ -105,17 +102,23 @@ class Profil extends Component {
         <RowPicker
           name="Dernier diplôme"
           options={diplomeOptions}
-          selected={this.state.diplome}
+          selected={this.state.diplome || 'Diplome'}
           submit={this._handlePicker}
           stateName="diplome"
         />
 
-        <Row name={'Permis'} content={<Switch/>}/>
+        <Row name={'Permis'} content={<Switch value={this.state.permis} onValueChange={(value) => {
+        this.setState({permis: value});
+        this._handleChange(this.state);
+        }} />}/>
         <View style={styles.inputWrapper}>
           <TextInput
             style={styles.input}
-            onChangeText={(salaire_minimum) => {this.setState({salaire_minimum})}}
-            value={String(this.state.salaire_minimum)}
+            onChangeText={(salaireminimum) => {
+            this.setState({salaireminimum});
+            this._handleChange(this.state);
+            }}
+            value={String(this.state.salaireminimum)}
             keyboardType="number-pad"
             placeholder="Salaire minimum"
             autoCorrect={false}
@@ -125,7 +128,10 @@ class Profil extends Component {
         <View style={styles.inputWrapper}>
           <TextInput
             style={styles.input}
-            onChangeText={(hobbies) => this.setState({hobbies})}
+            onChangeText={(hobbies) => {
+            this.setState({hobbies});
+            this._handleChange(this.state);
+            }}
             value={this.state.hobbies}
             placeholder="Hobbies ( séparés par une virgule )"
             placeholderTextColor={grey}
@@ -134,8 +140,11 @@ class Profil extends Component {
         <View style={styles.inputWrapper}>
           <TextInput
             style={[styles.input, styles.bigInput]}
-            onChangeText={(experiences_pro) => this.setState({experiences_pro})}
-            value={this.state.experiences_pro}
+            onChangeText={(experiencespro) => {
+            this.setState({experiencespro});
+            this._handleChange(this.state);
+            }}
+            value={this.state.experiencespro}
             placeholder="Expériences professionnelles"
             placeholderTextColor={grey}
             multiline={true}
@@ -144,7 +153,10 @@ class Profil extends Component {
         <View style={styles.inputWrapper}>
           <TextInput
             style={[styles.input, styles.bigInput]}
-            onChangeText={(competence) => this.setState({competence})}
+            onChangeText={(competence) => {
+            this.setState({competence});
+            this._handleChange(this.state);
+            }}
             value={this.state.competence}
             placeholder="skills"
             placeholderTextColor={grey}
@@ -155,7 +167,10 @@ class Profil extends Component {
         <View style={styles.inputWrapper}>
           <TextInput
             style={[styles.input, styles.bigInput]}
-            onChangeText={(preferences) => this.setState({preferences})}
+            onChangeText={(preferences) => {
+            this.setState({preferences});
+            this._handleChange(this.state);
+            }}
             value={this.state.preferences}
             placeholder="Préférences"
             placeholderTextColor={grey}
@@ -370,6 +385,7 @@ class Profil extends Component {
     let obj = {};
     obj[ stateName ] = option;
     this.setState(obj);
+    this._handleChange(this.state);
   }
 
   _handlePress () {
@@ -379,6 +395,7 @@ class Profil extends Component {
   }
 
   _handleChange (state) {
+    console.log(state);
     this.props.change(state);
   }
 }
