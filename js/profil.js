@@ -124,9 +124,12 @@ class Profil extends Component {
           entreprise: false
         }
 
-      })
+      });
     } else {
       this.state.user.parametres = JSON.parse(this.state.user.parametres);
+      if(typeof this.state.user.parametres === 'string'){
+        this.state.user.parametres = JSON.parse(this.state.user.parametres);
+      }
     }
 
 
